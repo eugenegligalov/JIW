@@ -1,6 +1,9 @@
 usePlugin 'project-reports'
 usePlugin 'java'
 
+archivesBaseName = 'jiw'
+version = '0.1.x'
+
 repositories {
     mavenCentral()
 }
