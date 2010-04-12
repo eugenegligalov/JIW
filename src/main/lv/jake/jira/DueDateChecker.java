@@ -6,7 +6,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 public class DueDateChecker {
@@ -18,6 +17,12 @@ public class DueDateChecker {
     public static final String OK = "ok";
     public static final String DUE_DATE_SOON = "due date soon";
     public static final String DUE_DATE_NOT_SET = "due date is not set";
+
+    protected final TimeService timeService;
+
+    public DueDateChecker(TimeService timeService) {
+        this.timeService = timeService;
+    }
 
     public void showIssuesDetail(Object[] filters, Map issues) {
         for (Object filter : filters) {
@@ -114,8 +119,7 @@ public class DueDateChecker {
     }
 
     public String getStatusForBlocker(Calendar duedate, Calendar updated, Calendar created) {
-        Calendar currentDate = new GregorianCalendar();
-        currentDate.setTime(new Date());
+        Calendar currentDate = timeService.getCalendar();
 
         if (duedate == null && getTimeDifferenceInMinutes(updated, currentDate) > 10) {
             return DUE_DATE_NOT_SET;
@@ -132,8 +136,7 @@ public class DueDateChecker {
     }
 
     public String getStatusForCritical(Calendar duedate, Calendar updated, Calendar created) {
-        Calendar currentDate = new GregorianCalendar();
-        currentDate.setTime(new Date());
+        Calendar currentDate = timeService.getCalendar();
 
         if (duedate == null && getTimeDifferenceInMinutes(updated, currentDate) > 30) {
             return DUE_DATE_NOT_SET;
@@ -150,8 +153,7 @@ public class DueDateChecker {
     }
 
     public String getStatusForMajor(Calendar duedate, Calendar updated, Calendar created) {
-        Calendar currentDate = new GregorianCalendar();
-        currentDate.setTime(new Date());
+        Calendar currentDate = timeService.getCalendar();
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }
@@ -162,8 +164,7 @@ public class DueDateChecker {
     }
 
     public String getStatusForMinor(Calendar duedate, Calendar updated, Calendar created) {
-        Calendar currentDate = new GregorianCalendar();
-        currentDate.setTime(new Date());
+        Calendar currentDate = timeService.getCalendar();
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }
@@ -174,8 +175,7 @@ public class DueDateChecker {
     }
 
     public String getStatusForTrivial(Calendar duedate, Calendar updated, Calendar created) {
-        Calendar currentDate = new GregorianCalendar();
-        currentDate.setTime(new Date());
+        Calendar currentDate = timeService.getCalendar();
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }

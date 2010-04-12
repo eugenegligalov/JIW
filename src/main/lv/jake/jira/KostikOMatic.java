@@ -22,7 +22,7 @@ public class KostikOMatic {
         Map issues;
         issues = jira.getIssuesFromFilters(rpcclient, loginToken, filters);
 
-        new DueDateChecker().showIssuesDetail(filters, issues);
+        new DueDateChecker(new TimeServiceImpl()).showIssuesDetail(filters, issues);
 
         jira.logout(rpcclient, loginToken);
     }
