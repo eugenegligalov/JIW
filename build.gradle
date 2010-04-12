@@ -34,6 +34,17 @@ sourceSets {
     }
 }
 
+task releaseZip(type: Zip, dependsOn: [jar]) {
+  fileSet(dir: 'resources')
+  fileSet(dir: '.') {
+    include('lib/*')
+  }
+  configurations.'archives'.artifacts.each {
+    from files(it.file.path)
+  }
+}
+
+
 // Copies all jars into the lib folder for IDE usage
 task ide << {task ->
     def libDir = task.project.file('lib')
