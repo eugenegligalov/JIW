@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.*;
 
 public class JiraXmlRpcApi {
+    
     private static org.apache.log4j.Logger log = Logger.getLogger(JiraXmlRpcApi.class);
 
     public XmlRpcClient getRpcClient(ConnectionClassificator connectionClassificator){
