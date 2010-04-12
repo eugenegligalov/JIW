@@ -6,7 +6,12 @@ repositories {
 }
 
 dependencies {
-    compile group: 'log4j', name: 'log4j', version: '1.2.15', transitive: false
+    compile group: 'log4j', name: 'log4j', version: '1.2.15', {
+      // Excluding depedencies brought by log4j 1.2.15, but not needed and not available in the public repository
+      exclude organization: "javax.jms", module: "jms"
+      exclude organization: "com.sun.jdmk", module: "jmxtools"
+      exclude organization: "com.sun.jmx", module: "jmxri" 
+    }
     compile group: 'org.apache.ws.commons.util', name: 'ws-commons-util', version: '1.0.2'
     compile group: 'org.apache.xmlrpc', name: 'xmlrpc-client', version: '3.1.3'
     compile group: 'org.apache.xmlrpc', name: 'xmlrpc-common', version: '3.1.3'
@@ -26,4 +31,12 @@ sourceSets {
     }
 }
 
-task copyToLib(type: CopyToLib)
+// Copies all jars into the lib folder for IDE usage
+task ide << {task ->
+    def libDir = task.project.file('lib')
+    ant.delete(dir: libDir)
+    copy {
+        from task.project.configurations.testRuntime.copyRecursive(DependencySpecs.type(Type.EXTERNAL)).files
+        into libDir
+    }
+}
