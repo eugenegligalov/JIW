@@ -1,3 +1,5 @@
+package lv.jake.jira;
+
 import org.apache.log4j.Logger;
 
 import java.text.ParseException;
@@ -33,14 +35,14 @@ public class DueDateChecker {
                     " - Priority: " +
                     getPriorityById(issue.get("priority").toString()) +
                     " /-/ STATUS: " + getDueDateStatus(issue.get("created").toString(),
-                    (String)issue.get("duedate"),issue.get("priority").toString(),
+                    (String) issue.get("duedate"), issue.get("priority").toString(),
                     issue.get("updated").toString()));
             log.debug("ID: " + issue.get("id") + " - Key: " + issue.get("key") + " - created: " +
                     issue.get("created") + " - updated: " + issue.get("updated") +
                     " - Due date: " + issue.get("duedate") + " - Priority: " +
                     getPriorityById(issue.get("priority").toString()) +
                     " /-/ STATUS: " + getDueDateStatus(issue.get("created").toString(),
-                    (String)issue.get("duedate"),issue.get("priority").toString(),
+                    (String) issue.get("duedate"), issue.get("priority").toString(),
                     issue.get("updated").toString()));
 //            log.info("--Summary: " + issue.get("summary"));
 //            Object[] comments = null;
@@ -49,6 +51,7 @@ public class DueDateChecker {
         }
 
     }
+
     public String getPriorityById(String id) {
         if (Integer.valueOf(id) == 1) {
             new Date().getTime();
@@ -68,6 +71,7 @@ public class DueDateChecker {
         }
         return NOT_VALID;
     }
+
     public String getDueDateStatus(String created, String duedate, String priority, String updated) {
         Calendar createdDateCalendar = null;
         Calendar dueDateCalendar = null;
@@ -76,7 +80,7 @@ public class DueDateChecker {
         SimpleDateFormat duedateParser = new SimpleDateFormat(DATE_PATTERN);
         SimpleDateFormat updateDateParser = new SimpleDateFormat(DATE_PATTERN);
         try {
-            if (duedate != null){
+            if (duedate != null) {
                 duedateParser.parse(duedate);
                 dueDateCalendar = duedateParser.getCalendar();
                 dueDateCalendar.set(Calendar.HOUR, 18);
@@ -135,7 +139,7 @@ public class DueDateChecker {
             return DUE_DATE_NOT_SET;
         }
 
-        if (getTimeDifferenceInHours(updated, currentDate)  > 4) {
+        if (getTimeDifferenceInHours(updated, currentDate) > 4) {
             return NOT_COMMENTED;
         }
 
@@ -151,9 +155,9 @@ public class DueDateChecker {
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0 ) {
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             return OVERDUE;
-       }
+        }
         return OK;
     }
 
@@ -163,9 +167,9 @@ public class DueDateChecker {
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0 ) {
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             return OVERDUE;
-       }
+        }
         return OK;
     }
 
@@ -175,9 +179,9 @@ public class DueDateChecker {
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0 ) {
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             return OVERDUE;
-       }
+        }
         return OK;
     }
 

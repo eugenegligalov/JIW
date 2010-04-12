@@ -1,3 +1,5 @@
+package lv.jake.jira;
+
 import org.apache.log4j.Logger;
 
 import java.net.MalformedURLException;
@@ -5,14 +7,15 @@ import java.net.URL;
 
 public class ConnectionClassificator {
     private static org.apache.log4j.Logger log = Logger.getLogger(ConnectionClassificator.class);
-    public String stringURL = null;
-    public String path = null;
-    public String login = null;
-    public String password = null;
+    protected String stringURL = null;
+    protected String path = null;
+    protected String login = null;
+    protected String password = null;
 
     public String getURL() {
         return stringURL;
     }
+
     public void setURL(String URL) {
         this.stringURL = URL;
     }
@@ -20,6 +23,7 @@ public class ConnectionClassificator {
     public String getPath() {
         return path;
     }
+
     public void setPath(String path) {
         this.path = path;
     }
