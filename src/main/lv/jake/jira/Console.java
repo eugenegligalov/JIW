@@ -47,7 +47,7 @@ public class Console {
             return true;
         } else if (CMD_REPORT.equalsIgnoreCase(input)) {
             matic.run();
-        } else {
+        } else if (input.trim().length() > 0){
             System.out.println("Unrecognized command");
         }
         return false;
@@ -64,6 +64,6 @@ public class Console {
     }
 
     private void printCommandPromptPrefix() {
-        System.out.println(">>> ");
+        System.out.print(">>> ");
     }
 }
