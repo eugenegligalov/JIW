@@ -35,21 +35,17 @@ public class DueDateChecker {
     public void showIssueDetail(Map issues, String currentIssues) {
         for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
             Map issue = (Map) currentIssue;
-            log.info(" - Key: " + issue.get("key") + " - created: " +
-                    issue.get("created") + " - Due date: " + issue.get("duedate") +
-                    " - Priority: " +
+            log.info("Key: " + issue.get("key") /*+ " - created: " +
+                    issue.get("created") + " - updated: " + issue.get("updated")"*/ +
+                    " - Due date: " + issue.get("duedate") + "- Priority: " +
                     getPriorityById(issue.get("priority").toString()) +
                     " /-/ STATUS: " + getDueDateStatus(issue.get("created").toString(),
                     (String) issue.get("duedate"), issue.get("priority").toString(),
                     issue.get("updated").toString()));
-            log.debug("ID: " + issue.get("id") + " - Key: " + issue.get("key") + " - created: " +
-                    issue.get("created") + " - updated: " + issue.get("updated") +
-                    " - Due date: " + issue.get("duedate") + " - Priority: " +
-                    getPriorityById(issue.get("priority").toString()) +
-                    " /-/ STATUS: " + getDueDateStatus(issue.get("created").toString(),
+            if (getDueDateStatus(issue.get("created").toString(),
                     (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString()));
-//            log.info("--Summary: " + issue.get("summary"));
+                    issue.get("updated").toString()) != OK) 
+            log.info("||--Summary: " + issue.get("summary"));
 //            Object[] comments = null;
 //                comments = jira.getComments(rpcclient, loginToken, (String) issue.get("key"));
 //                log.info("comments count: " + comments.length);
@@ -153,6 +149,9 @@ public class DueDateChecker {
 
     public String getStatusForMajor(Calendar duedate, Calendar updated, Calendar created) {
         Calendar currentDate = timeService.getCalendar();
+        if (duedate == null && getTimeDifferenceInHours(created, currentDate) > 24) {
+            return DUE_DATE_NOT_SET;
+        }
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             return DUE_DATE_SOON;
         }
