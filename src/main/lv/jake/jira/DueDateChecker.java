@@ -59,7 +59,6 @@ public class DueDateChecker {
 
     public String getPriorityById(String id) {
         if (Integer.valueOf(id) == 1) {
-            new Date().getTime();
             return "Blocker";
         }
         if (Integer.valueOf(id) == 2) {
@@ -121,7 +120,7 @@ public class DueDateChecker {
     public String getStatusForBlocker(Calendar duedate, Calendar updated, Calendar created) {
         Calendar currentDate = timeService.getCalendar();
 
-        if (duedate == null && getTimeDifferenceInMinutes(updated, currentDate) > 10) {
+        if (duedate == null && getTimeDifferenceInMinutes(created, currentDate) > 10) {
             return DUE_DATE_NOT_SET;
         }
 

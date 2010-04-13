@@ -10,6 +10,6 @@ import java.util.GregorianCalendar;
 */
 class MockTimeService implements TimeService {
     public Calendar getCalendar() {
-        return new GregorianCalendar(2010, 1, 15);
+        return new GregorianCalendar(2000, 12-1, 2, 10, 40, 0 );
     }
 }
