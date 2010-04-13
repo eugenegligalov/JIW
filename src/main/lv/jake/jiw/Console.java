@@ -1,4 +1,4 @@
-package lv.jake.jira;
+package lv.jake.jiw;
 
 import java.io.BufferedReader;
 import java.io.IOException;

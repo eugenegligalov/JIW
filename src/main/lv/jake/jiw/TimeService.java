@@ -1,8 +1,6 @@
-package lv.jake.jira;
+package lv.jake.jiw;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 /**
  * Author: Konstantin Zmanovsky

@@ -1,9 +1,6 @@
-package lv.jake.jira;
+package lv.jake.jiw;
 
 import junit.framework.TestCase;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * User: Jaker
@@ -26,19 +23,19 @@ public class DueDateCheckerTest extends TestCase {
     }
     public void testGetStatusForCritical(){
         DueDateChecker dueDateChecker = new DueDateChecker(timeService);
-//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.jira.DueDateChecker.OVERDUE);
+//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.lv.jake.jiw.DueDateChecker.OVERDUE);
     }
     public void testGetStatusForMajor(){
         DueDateChecker dueDateChecker = new DueDateChecker(timeService);
-//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.jira.DueDateChecker.OVERDUE);
+//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.lv.jake.jiw.DueDateChecker.OVERDUE);
     }
     public void testGetStatusForMinor(){
         DueDateChecker dueDateChecker = new DueDateChecker(timeService);
-//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.jira.DueDateChecker.OVERDUE);
+//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.lv.jake.jiw.DueDateChecker.OVERDUE);
     }
     public void testGetStatusForTrivial(){
         DueDateChecker dueDateChecker = new DueDateChecker(timeService);
-//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.jira.DueDateChecker.OVERDUE);
+//        assertEquals(dueDateChecker.getDueDateStatus("2010-03-29 11:23:02.0", "2010-03-29 11:23:02.0","1","2010-03-29 11:23:02.0"),lv.jake.lv.jake.jiw.DueDateChecker.OVERDUE);
     }
 
     protected void setUp() throws Exception {

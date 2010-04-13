@@ -1,4 +1,4 @@
-package lv.jake.jira;
+package lv.jake.jiw;
 
 import org.apache.log4j.Logger;
 

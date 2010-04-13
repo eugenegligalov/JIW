@@ -1,11 +1,10 @@
-package lv.jake.jira;
+package lv.jake.jiw;
 
 import org.apache.log4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 public class DueDateChecker {
@@ -47,7 +46,7 @@ public class DueDateChecker {
                     issue.get("updated").toString()) != OK) 
             log.info("||--Summary: " + issue.get("summary"));
 //            Object[] comments = null;
-//                comments = jira.getComments(rpcclient, loginToken, (String) issue.get("key"));
+//                comments = lv.jake.jiw.getComments(rpcclient, loginToken, (String) issue.get("key"));
 //                log.info("comments count: " + comments.length);
         }
 
