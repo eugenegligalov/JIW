@@ -47,10 +47,10 @@ public class JiraXmlRpcApi {
         return (Object[]) object;
     }
 
-    public Object[] getIssuesFromFilter(XmlRpcClient rpcclient, Vector<String> loginTokenVector, String filterName) {
+    public Object[] getIssuesFromFilter(XmlRpcClient rpcclient, Vector<String> loginTokenVector, String id) {
         Object object = null;
         Vector<String> currentProperties = new Vector<String>(loginTokenVector);
-        currentProperties.add(filterName);
+        currentProperties.add(id);
         try {
             object = rpcclient.execute("jira1.getIssuesFromFilter", currentProperties);
         } catch (XmlRpcException e) {
