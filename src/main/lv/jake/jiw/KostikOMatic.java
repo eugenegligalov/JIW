@@ -1,8 +1,10 @@
 package lv.jake.jiw;
 
+import lv.jake.jiw.yaml.YamlConfigurationService;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Vector;
 
@@ -43,7 +45,14 @@ public class KostikOMatic {
     }
 
     public void init() {
-        connectionClassificator = new PropertyReader(propertyFileName).read();
+        final YamlConfigurationService yamlConfigurationService = new YamlConfigurationService();
+        try {
+            yamlConfigurationService.init(propertyFileName);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Unable to load " + propertyFileName + " configuration file", e);
+        }
+
+        connectionClassificator = new PropertyReader(yamlConfigurationService).read();
         rpcclient = jira.getRpcClient(connectionClassificator);
         initialized = true;
     }
