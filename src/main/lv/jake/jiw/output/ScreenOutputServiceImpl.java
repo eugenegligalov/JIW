@@ -7,11 +7,9 @@ import org.apache.log4j.Logger;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Jaker
  * Date: 2010.14.4
  * Time: 22:03:49
- * To change this template use File | Settings | File Templates.
  */
 public class ScreenOutputServiceImpl implements OutputService {
     private static org.apache.log4j.Logger log = Logger.getLogger(ScreenOutputServiceImpl.class);
@@ -43,9 +41,9 @@ public class ScreenOutputServiceImpl implements OutputService {
                     " /-/ STATUS: " + dueDateChecker.getDueDateStatus(issue.get("created").toString(),
                     (String) issue.get("duedate"), issue.get("priority").toString(),
                     issue.get("updated").toString()));
-            if (dueDateChecker.getDueDateStatus(issue.get("created").toString(),
+            if (!DueDateChecker.OK.equals(dueDateChecker.getDueDateStatus(issue.get("created").toString(),
                     (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString()) != DueDateChecker.OK)
+                    issue.get("updated").toString())))
             log.info("||--Summary: " + issue.get("summary"));
 //            Object[] comments = null;
 //                comments = lv.jake.jiw.getComments(rpcclient, loginToken, (String) issue.get("key"));
