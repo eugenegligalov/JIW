@@ -3,14 +3,15 @@ package lv.jake.jiw.output;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import lv.jake.jiw.DueDateChecker;
 import lv.jake.jiw.TimeServiceImpl;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,9 +49,21 @@ public class HtmlOutputServiceImpl implements OutputService {
         }
     }
     
-    private void writeReport(){
-        Writer out = new OutputStreamWriter(System.out);
-//        template.process(root, out);
+    private void writeReport(Map issues, String file){
+        Writer out = null;
+        try {
+            OutputStream os = new FileOutputStream(file);
+            out = new OutputStreamWriter(os);
+        } catch (FileNotFoundException e) {
+            log.error(e);
+        }
+        try {
+            template.process(issues, out);
+        } catch (TemplateException e) {
+            log.error(e);
+        } catch (IOException e) {
+            log.error(e);
+        }
         try {
             out.flush();
         } catch (IOException e) {
@@ -59,10 +72,32 @@ public class HtmlOutputServiceImpl implements OutputService {
     }
 
     public void printOutput() {
+        List issuesArray = new ArrayList();
         for (Object filter : filters) {
             Map currentFilter = (Map) filter;
-            showIssueDetail(issues, (String) currentFilter.get("id"));
+            issuesArray.add("<TD><B>" + currentFilter.get("name") + "</B></TD>");
+            issuesArray.addAll(getIssueDetail(issues, (String) currentFilter.get("id")));
         }
+        Map issuesMap = new HashMap();
+        issuesMap.put("issues",issuesArray);
+        writeReport(issuesMap, "report.html");
+    }
+
+    public List getIssueDetail(Map issues, String currentIssues) {
+        List issuesArray = new ArrayList();
+        for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
+            Map issue = (Map) currentIssue;
+            String issueDetail = "<TD>" + issue.get("key") + "</TD>\n<TD>" +
+                    issue.get("created") + "</TD>\n<TD>" + issue.get("updated") +
+                    "</TD>\n<TD>" + issue.get("duedate") + "</TD>\n<TD>" +
+                    getPriorityById(issue.get("priority").toString()) +
+                    "</TD>\n<TD>" + dueDateChecker.getDueDateStatus(issue.get("created").toString(),
+                    (String) issue.get("duedate"), issue.get("priority").toString(),
+                    issue.get("updated").toString()) +
+                    "</TD>\n<TD>" + issue.get("summary") + "</TD>";
+            issuesArray.add(issueDetail);
+        }
+        return issuesArray;
     }
 
     public void showIssueDetail(Map issues, String currentIssues) {

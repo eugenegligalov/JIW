@@ -7,20 +7,17 @@
 <BODY>
 <TABLE>
  <TR>
-  <TD>ID</TD>
-  <TD>Created</TD>
-  <TD>Updated</TD>
-  <TD>Duedate</TD>
-  <TD>Priority</TD>
-  <TD>Summary</TD>
+  <TH>ID</TD>
+  <TH>Created</TH>
+  <TH>Updated</TH>
+  <TH>Duedate</TH>
+  <TH>Priority</TH>
+  <TH>Status</TH>
+  <TH>Summary</TH>
  </TR>
- <TR>
-  <TD>${key}</TD>
-  <TD>${created}</TD>
-  <TD>${updated}</TD>
-  <TD>${duedate}</TD>
-  <TD>${priority}</TD>
-  <TD>${summary}</TD>
+<#list issues as x>
+	<TR>${x}<#if x_has_next></TR></#if>
+</#list>  
  </TR>
 </TABLE>
 

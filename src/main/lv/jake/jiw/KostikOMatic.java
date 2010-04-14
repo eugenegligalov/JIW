@@ -29,7 +29,7 @@ public class KostikOMatic {
 
     public KostikOMatic(final String propertyFileName) {
         this.propertyFileName = propertyFileName;
-        this.outputService = new ScreenOutputServiceImpl();
+        this.outputService = new HtmlOutputServiceImpl();
     }
 
     public void run() {
