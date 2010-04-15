@@ -3,6 +3,8 @@ package lv.jake.jiw;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Author: Konstantin Zmanovsky
@@ -14,13 +16,27 @@ import java.io.InputStreamReader;
  */
 public class Console {
     private static final String CMD_EXIT = "exit";
-    private KostikOMatic matic;
     private static final String CMD_REPORT = "report";
+    private static final String CMD_SCHEDULE = "schedule";
+
+    private KostikOMatic matic;
+    private static final String REPORTING_TIMER_NAME = "reportingTimer";
+    protected Timer timer = new Timer(REPORTING_TIMER_NAME);
+    private static final int REPORT_GENERATION_DELAY = 3600;
+    protected TimerTask reportingTask;
+
+    public Console() {
+        reportingTask = new TimerTask() {
+            @Override
+            public void run() {
+                produceReport();
+            }
+        };
+    }
 
     public static void main(String[] args) {
         final Console console = new Console();
         console.init(args);
-        console.runBackgroundProcesses();
         console.startProcessingUserInput();
     }
 
@@ -39,6 +55,8 @@ public class Console {
             }
             exit = processUserInput(input);
         }
+        reportingTask.cancel();
+        timer.cancel();
     }
 
 
@@ -46,15 +64,23 @@ public class Console {
         if (CMD_EXIT.equalsIgnoreCase(input)) {
             return true;
         } else if (CMD_REPORT.equalsIgnoreCase(input)) {
-            matic.run();
+            produceReport();
+        } else if (CMD_SCHEDULE.equalsIgnoreCase(input)) {
+            scheduleRecurringReportGeneration();
+            System.out.println("Recurring report generation has been scheduled, once in " + 
+                    REPORT_GENERATION_DELAY/3600 + " munutes");
         } else if (input.trim().length() > 0){
             System.out.println("Unrecognized command");
         }
         return false;
     }
 
-    //TODO: Implement
-    private void runBackgroundProcesses() {
+    private void produceReport() {
+        matic.run();
+    }
+
+    private void scheduleRecurringReportGeneration() {
+        timer.schedule(reportingTask, 500, REPORT_GENERATION_DELAY);
     }
 
     private void init(String[] args) {
