@@ -2,7 +2,6 @@ package lv.jake.jiw;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import lv.jake.jiw.services.IssueReportGenerator;
 
 /**
  * Author: Konstantin Zmanovsky

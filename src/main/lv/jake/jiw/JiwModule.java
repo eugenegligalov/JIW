@@ -1,11 +1,9 @@
 package lv.jake.jiw;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.name.Names;
 import lv.jake.jiw.services.*;
-
-import java.io.FileNotFoundException;
 
 /**
  * Author: Konstantin Zmanovsky
@@ -14,7 +12,6 @@ import java.io.FileNotFoundException;
  */
 public class JiwModule extends AbstractModule {
     private final String configurationFileName;
-    private Configuration configuration;
 
     public JiwModule(String configurationFileName) {
         this.configurationFileName = configurationFileName;
@@ -22,18 +19,12 @@ public class JiwModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(String.class).annotatedWith(Names.named("configurationFileName")).toInstance(configurationFileName);
+        bind(Configuration.class).toProvider(YamlConfigurationLoader.class).in(Singleton.class);
         bind(TimeService.class).to(TimeServiceImpl.class).in(Singleton.class);
         bind(OutputService.class).to(HtmlOutputServiceImpl.class).in(Singleton.class);
         bind(JiraService.class).to(JiraXmlRpcApi.class).in(Singleton.class);
         bind(IssueReportGenerator.class).to(IssueReportGeneratorImpl.class).in(Singleton.class);
-    }
-
-    @Provides
-    Configuration provideConfiguration() throws FileNotFoundException {
-        if (configuration == null) {
-            configuration = YamlConfigurationLoader.load(configurationFileName);
-        }
-        return configuration;
     }
 
 }

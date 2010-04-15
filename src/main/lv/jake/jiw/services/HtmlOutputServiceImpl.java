@@ -6,7 +6,6 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lv.jake.jiw.DueDateChecker;
-import lv.jake.jiw.services.TimeServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.io.*;

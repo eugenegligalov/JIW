@@ -2,7 +2,6 @@ package lv.jake.jiw.services;
 
 import com.google.inject.Inject;
 import lv.jake.jiw.DueDateChecker;
-import lv.jake.jiw.services.TimeServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.util.Map;

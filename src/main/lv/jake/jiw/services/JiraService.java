@@ -20,5 +20,5 @@ public interface JiraService {
     Object[] getComments(String issueId);
 
     void logout();
-    
+
 }
