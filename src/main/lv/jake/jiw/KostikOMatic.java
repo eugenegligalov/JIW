@@ -1,5 +1,8 @@
 package lv.jake.jiw;
 
+import lv.jake.jiw.output.HtmlOutputServiceImpl;
+import lv.jake.jiw.output.OutputService;
+import lv.jake.jiw.output.ScreenOutputServiceImpl;
 import lv.jake.jiw.yaml.YamlConfigurationService;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -15,6 +18,7 @@ public class KostikOMatic {
     private boolean initialized = false;
     private ConnectionClassificator connectionClassificator = null;
     private XmlRpcClient rpcclient = null;
+    private OutputService outputService = null;
 
     private final String propertyFileName;
 
@@ -25,6 +29,7 @@ public class KostikOMatic {
 
     public KostikOMatic(final String propertyFileName) {
         this.propertyFileName = propertyFileName;
+        this.outputService = new HtmlOutputServiceImpl();
     }
 
     public void run() {
@@ -39,7 +44,8 @@ public class KostikOMatic {
         Map issues;
         issues = jira.getIssuesFromFilters(rpcclient, loginToken, filters);
 
-        new DueDateChecker(new TimeServiceImpl()).showIssuesDetail(filters, issues);
+        outputService.setData(filters, issues);
+        outputService.printOutput();
 
         jira.logout(rpcclient, loginToken);
     }

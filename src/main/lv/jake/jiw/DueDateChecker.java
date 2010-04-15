@@ -23,54 +23,6 @@ public class DueDateChecker {
         this.timeService = timeService;
     }
 
-    public void showIssuesDetail(Object[] filters, Map issues) {
-        for (Object filter : filters) {
-            Map currentFilter = (Map) filter;
-            log.info("\n///////--------------- Filter " + currentFilter.get("name") + " ----------------///////");
-            showIssueDetail(issues, (String) currentFilter.get("id"));
-        }
-    }
-
-    public void showIssueDetail(Map issues, String currentIssues) {
-        for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
-            Map issue = (Map) currentIssue;
-            log.info("Key: " + issue.get("key") /*+ " - created: " +
-                    issue.get("created") + " - updated: " + issue.get("updated")"*/ +
-                    " - Due date: " + issue.get("duedate") + "- Priority: " +
-                    getPriorityById(issue.get("priority").toString()) +
-                    " /-/ STATUS: " + getDueDateStatus(issue.get("created").toString(),
-                    (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString()));
-            if (getDueDateStatus(issue.get("created").toString(),
-                    (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString()) != OK) 
-            log.info("||--Summary: " + issue.get("summary"));
-//            Object[] comments = null;
-//                comments = lv.jake.jiw.getComments(rpcclient, loginToken, (String) issue.get("key"));
-//                log.info("comments count: " + comments.length);
-        }
-
-    }
-
-    public String getPriorityById(String id) {
-        if (Integer.valueOf(id) == 1) {
-            return "Blocker";
-        }
-        if (Integer.valueOf(id) == 2) {
-            return "Critical";
-        }
-        if (Integer.valueOf(id) == 3) {
-            return "Major";
-        }
-        if (Integer.valueOf(id) == 4) {
-            return "Minor";
-        }
-        if (Integer.valueOf(id) == 5) {
-            return "Trivial";
-        }
-        return NOT_VALID;
-    }
-
     public String getDueDateStatus(String created, String duedate, String priority, String updated) {
         Calendar createdDateCalendar = null;
         Calendar dueDateCalendar = null;
