@@ -15,11 +15,11 @@ import java.io.FileReader;
  * Date: Apr 13, 2010
  * Time: 8:25:50 PM
  */
-public class YamlConfigurationLoader implements Provider<Configuration> {
+public class YamlConfigurationProvider implements Provider<Configuration> {
     private final String configurationFileName;
 
     @Inject
-    public YamlConfigurationLoader(@Named("configurationFileName") String configurationFileName) {
+    public YamlConfigurationProvider(@Named("configurationFileName") String configurationFileName) {
         this.configurationFileName = configurationFileName;
     }
 
