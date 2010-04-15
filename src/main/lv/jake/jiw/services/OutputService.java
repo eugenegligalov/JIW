@@ -11,7 +11,10 @@ import java.util.Map;
  */
 public interface OutputService {
     public void setData(Object[] filters, Map issues);
+
     public void printOutput();
+
     public void showIssueDetail(Map issues, String currentIssues);
+
     public String getPriorityById(String id);
 }

@@ -1,5 +1,8 @@
 package lv.jake.jiw.services;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Author: Konstantin Zmanovsky
  * Date: Apr 13, 2010
@@ -48,5 +51,9 @@ public class Configuration {
     @SuppressWarnings({"UnusedDeclaration"})
     public void setXmlRpcPath(String xmlRpcPath) {
         this.xmlRpcPath = xmlRpcPath;
+    }
+
+    public URL constructFullUrl() throws MalformedURLException {
+        return new URL(url + xmlRpcPath);
     }
 }

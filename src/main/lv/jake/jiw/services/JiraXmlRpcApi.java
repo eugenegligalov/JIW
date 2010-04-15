@@ -1,30 +1,40 @@
-package lv.jake.jiw;
+package lv.jake.jiw.services;
 
+import com.google.inject.Inject;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class JiraXmlRpcApi {
-    
-    private static org.apache.log4j.Logger log = Logger.getLogger(JiraXmlRpcApi.class);
+public class JiraXmlRpcApi implements JiraService {
 
-    public XmlRpcClient getRpcClient(ConnectionClassificator connectionClassificator) {
+    private static org.apache.log4j.Logger log = Logger.getLogger(JiraXmlRpcApi.class);
+    private XmlRpcClient rpcclient;
+    private String login;
+    private String password;
+    private Vector<String> loginTokenVector;
+
+    @Inject
+    public JiraXmlRpcApi(Configuration configuration) throws MalformedURLException {
         XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
-        config.setServerURL(connectionClassificator.getFullUrl());
+        config.setServerURL(configuration.constructFullUrl());
         XmlRpcClient rpcClient = new XmlRpcClient();
         rpcClient.setConfig(config);
-        return rpcClient;
+
+        this.login = configuration.getUsername();
+        this.password = configuration.getPassword();
+        this.rpcclient = rpcClient;
     }
 
-    public Vector<String> login(XmlRpcClient rpcclient, ConnectionClassificator connectionClassificator) {
+    public void login() {
         Vector<String> loginParams = new Vector<String>(2);
-        loginParams.add(connectionClassificator.getLogin());
-        loginParams.add(connectionClassificator.getPassword());
+        loginParams.add(login);
+        loginParams.add(password);
         String loginToken = null;
         try {
             loginToken = (String) rpcclient.execute("jira1.login", loginParams);
@@ -34,10 +44,11 @@ public class JiraXmlRpcApi {
 
         Vector<String> loginTokenVector = new Vector<String>(1);
         loginTokenVector.add(loginToken);
-        return loginTokenVector;
+
+        this.loginTokenVector = loginTokenVector;
     }
 
-    public Object[] getFavouriteFilters(XmlRpcClient rpcclient, Vector loginTokenVector) {
+    public Object[] getFavouriteFilters() {
         Object object = null;
         try {
             object = rpcclient.execute("jira1.getFavouriteFilters", loginTokenVector);
@@ -47,7 +58,7 @@ public class JiraXmlRpcApi {
         return (Object[]) object;
     }
 
-    public Object[] getIssuesFromFilter(XmlRpcClient rpcclient, Vector<String> loginTokenVector, String id) {
+    public Object[] getIssuesFromFilter(String id) {
         Object object = null;
         Vector<String> currentProperties = new Vector<String>(loginTokenVector);
         currentProperties.add(id);
@@ -59,19 +70,19 @@ public class JiraXmlRpcApi {
         return (Object[]) object;
     }
 
-    public Map getIssuesFromFilters(XmlRpcClient rpcclient, Vector loginTokenVector, Object[] filters) {
+    public Map getIssuesFromFilters(Object[] filters) {
         Map projects = new HashMap();
         for (Object filter : filters) {
             Map project = (Map) filter;
             Object[] currentFilter;
             //noinspection unchecked
-            currentFilter = getIssuesFromFilter(rpcclient, loginTokenVector, (String) project.get("id"));
+            currentFilter = getIssuesFromFilter((String) project.get("id"));
             projects.put(project.get("id"), currentFilter);
         }
         return projects;
     }
 
-    public Object[] getComments(XmlRpcClient rpcclient, Vector loginTokenVector, String issueId) {
+    public Object[] getComments(String issueId) {
         Object object = null;
         Vector<String> currentProperties = new Vector<String>(loginTokenVector);
         currentProperties.add(issueId);
@@ -83,7 +94,7 @@ public class JiraXmlRpcApi {
         return (Object[]) object;
     }
 
-    public void logout(XmlRpcClient rpcclient, Vector loginTokenVector) {
+    public void logout() {
         Boolean bool = null;
         try {
             bool = (Boolean) rpcclient.execute("jira1.logout", loginTokenVector);
@@ -93,6 +104,4 @@ public class JiraXmlRpcApi {
         log.info("Logout successful: " + bool);
     }
 
-    public JiraXmlRpcApi() {
-    }
 }

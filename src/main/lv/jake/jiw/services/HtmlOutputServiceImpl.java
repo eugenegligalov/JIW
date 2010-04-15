@@ -1,11 +1,12 @@
 package lv.jake.jiw.services;
 
+import com.google.inject.Inject;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lv.jake.jiw.DueDateChecker;
-import lv.jake.jiw.TimeServiceImpl;
+import lv.jake.jiw.services.TimeServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.io.*;
@@ -15,11 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by IntelliJ IDEA.
  * User: Jaker
  * Date: 2010.14.4
  * Time: 22:04:40
- * To change this template use File | Settings | File Templates.
  */
 public class HtmlOutputServiceImpl implements OutputService {
     private static org.apache.log4j.Logger log = Logger.getLogger(HtmlOutputServiceImpl.class);
@@ -28,13 +27,18 @@ public class HtmlOutputServiceImpl implements OutputService {
     DueDateChecker dueDateChecker = null;
     Template template = null;
 
+    @Inject
+    public HtmlOutputServiceImpl(DueDateChecker dueDateChecker) {
+        this.dueDateChecker = dueDateChecker;
+    }
+
     public void setData(Object[] filters, Map issues) {
         this.filters = filters;
         this.issues = issues;
-        dueDateChecker = new DueDateChecker(new TimeServiceImpl());
-        readTemplate(".","report_template.ftl");
+        readTemplate(".", "report_template.ftl");
     }
-    private void readTemplate(String path, String filename){
+
+    private void readTemplate(String path, String filename) {
         Configuration configuration = new Configuration();
         try {
             configuration.setDirectoryForTemplateLoading(new File(path));
@@ -48,8 +52,8 @@ public class HtmlOutputServiceImpl implements OutputService {
             log.error(e);
         }
     }
-    
-    private void writeReport(Map issues, String file){
+
+    private void writeReport(Map issues, String file) {
         Writer out = null;
         try {
             OutputStream os = new FileOutputStream(file);
@@ -79,7 +83,7 @@ public class HtmlOutputServiceImpl implements OutputService {
             issuesArray.addAll(getIssueDetail(issues, (String) currentFilter.get("id")));
         }
         Map issuesMap = new HashMap();
-        issuesMap.put("issues",issuesArray);
+        issuesMap.put("issues", issuesArray);
         writeReport(issuesMap, "report.html");
     }
 

@@ -1,4 +1,4 @@
-package lv.jake.jiw;
+package lv.jake.jiw.services;
 
 import java.util.Calendar;
 import java.util.Date;

@@ -1,0 +1,20 @@
+package lv.jake.jiw;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import lv.jake.jiw.services.IssueReportGenerator;
+
+/**
+ * Author: Konstantin Zmanovsky
+ * Date: Apr 15, 2010
+ * Time: 4:46:03 PM
+ */
+public class Main {
+    public static void main(String[] args) {
+        final Injector injector = Guice.createInjector(new JiwModule(args[0]));
+
+        final Console console = injector.getInstance(Console.class);
+
+        console.startProcessingUserInput();
+    }
+}

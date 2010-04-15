@@ -1,11 +1,12 @@
 package lv.jake.jiw;
 
+import com.google.inject.Inject;
+import lv.jake.jiw.services.TimeService;
 import org.apache.log4j.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
 public class DueDateChecker {
     private static org.apache.log4j.Logger log = Logger.getLogger(DueDateChecker.class);
@@ -19,6 +20,7 @@ public class DueDateChecker {
 
     protected final TimeService timeService;
 
+    @Inject
     public DueDateChecker(TimeService timeService) {
         this.timeService = timeService;
     }

@@ -1,7 +1,8 @@
 package lv.jake.jiw.services;
 
+import com.google.inject.Inject;
 import lv.jake.jiw.DueDateChecker;
-import lv.jake.jiw.TimeServiceImpl;
+import lv.jake.jiw.services.TimeServiceImpl;
 import org.apache.log4j.Logger;
 
 import java.util.Map;
@@ -17,10 +18,14 @@ public class ScreenOutputServiceImpl implements OutputService {
     Map issues = null;
     DueDateChecker dueDateChecker = null;
 
-    public void setData(Object[] filters, Map issues){
+    @Inject
+    public ScreenOutputServiceImpl(DueDateChecker dueDateChecker) {
+        this.dueDateChecker = dueDateChecker;
+    }
+
+    public void setData(Object[] filters, Map issues) {
         this.filters = filters;
         this.issues = issues;
-        dueDateChecker = new DueDateChecker(new TimeServiceImpl());
     }
 
     public void printOutput() {
@@ -31,7 +36,7 @@ public class ScreenOutputServiceImpl implements OutputService {
         }
     }
 
-    public void showIssueDetail(Map issues, String currentIssues){
+    public void showIssueDetail(Map issues, String currentIssues) {
         for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
             Map issue = (Map) currentIssue;
             log.info("Key: " + issue.get("key") /*+ " - created: " +
@@ -44,7 +49,7 @@ public class ScreenOutputServiceImpl implements OutputService {
             if (!DueDateChecker.OK.equals(dueDateChecker.getDueDateStatus(issue.get("created").toString(),
                     (String) issue.get("duedate"), issue.get("priority").toString(),
                     issue.get("updated").toString())))
-            log.info("||--Summary: " + issue.get("summary"));
+                log.info("||--Summary: " + issue.get("summary"));
 //            Object[] comments = null;
 //                comments = lv.jake.jiw.getComments(rpcclient, loginToken, (String) issue.get("key"));
 //                log.info("comments count: " + comments.length);
