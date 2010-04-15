@@ -39,7 +39,7 @@ public class Console {
             }
         };
         this.reportGenerator = reportGenerator;
-        log.info("Jira Issue Watcher");
+        System.out.println("Jira Issue Watcher");
     }
 
 
@@ -73,10 +73,10 @@ public class Console {
             produceReport();
         } else if (CMD_SCHEDULE.equalsIgnoreCase(input)) {
             scheduleRecurringReportGeneration();
-            log.info("Recurring report generation has been scheduled, once in " +
-                    REPORT_GENERATION_DELAY / 3600 + " munutes");
+            System.out.println("Recurring report generation has been scheduled, once in " +
+                    REPORT_GENERATION_DELAY / 3600 + " minutes");
         } else if (input.trim().length() > 0) {
-            log.info("Unrecognized command");
+            System.out.println("Unrecognized command");
         }
         return false;
     }
@@ -90,6 +90,6 @@ public class Console {
     }
 
     private void printCommandPromptPrefix() {
-        log.info(">>> ");
+        System.out.println(">>> ");
     }
 }

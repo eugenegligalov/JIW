@@ -25,16 +25,18 @@ public class HtmlOutputServiceImpl implements OutputService {
     Map issues = null;
     DueDateChecker dueDateChecker = null;
     Template template = null;
+    lv.jake.jiw.services.Configuration configuration = null;
 
     @Inject
-    public HtmlOutputServiceImpl(DueDateChecker dueDateChecker) {
+    public HtmlOutputServiceImpl(DueDateChecker dueDateChecker, lv.jake.jiw.services.Configuration configuration) {
         this.dueDateChecker = dueDateChecker;
+        this.configuration = configuration;
     }
 
     public void setData(Object[] filters, Map issues) {
         this.filters = filters;
         this.issues = issues;
-        readTemplate(".", "report_template.ftl");
+        readTemplate(configuration.getHtmlReportTemplatePath(), configuration.getHtmlReportTemplateFileName());
     }
 
     private void readTemplate(String path, String filename) {
@@ -90,13 +92,20 @@ public class HtmlOutputServiceImpl implements OutputService {
         List issuesArray = new ArrayList();
         for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
             Map issue = (Map) currentIssue;
-            String issueDetail = "<TD>" + issue.get("key") + "</TD>\n<TD>" +
+            String url = configuration.getUrl();
+
+            url = "<A HREF=\"" + url + "/browse/" + issue.get("key") +
+                    " \">"+issue.get("key")+"</A>";
+
+            String status = dueDateChecker.getDueDateStatus(issue.get("created").toString(),
+                    (String) issue.get("duedate"), issue.get("priority").toString(),
+                    issue.get("updated").toString());
+
+            String issueDetail = "<TD>" + url + "</TD>\n<TD>" +
                     issue.get("created") + "</TD>\n<TD>" + issue.get("updated") +
                     "</TD>\n<TD>" + issue.get("duedate") + "</TD>\n<TD>" +
                     getPriorityById(issue.get("priority").toString()) +
-                    "</TD>\n<TD>" + dueDateChecker.getDueDateStatus(issue.get("created").toString(),
-                    (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString()) +
+                    "</TD>\n<TD>" + status +
                     "</TD>\n<TD>" + issue.get("summary") + "</TD>";
             issuesArray.add(issueDetail);
         }

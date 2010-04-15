@@ -9,12 +9,31 @@ import java.net.URL;
  * Time: 8:27:15 PM
  */
 public class Configuration {
+
+    private String htmlReportTemplatePath;
+    private String htmlReportTemplateFileName;
     private String url;
     private String username;
     private String password;
     private String xmlRpcPath = "/rpc/xmlrpc";
 
     public Configuration() {
+    }
+
+    public String getHtmlReportTemplatePath() {
+        return htmlReportTemplatePath;
+    }
+
+    public void setHtmlReportTemplatePath(String htmlReportTemplatePath) {
+        this.htmlReportTemplatePath = htmlReportTemplatePath;
+    }
+
+    public String getHtmlReportTemplateFileName() {
+        return htmlReportTemplateFileName;
+    }
+
+    public void setHtmlReportTemplateFileName(String htmlReportTemplateFileName) {
+        this.htmlReportTemplateFileName = htmlReportTemplateFileName;
     }
 
     public String getUrl() {

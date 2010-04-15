@@ -1,4 +1,6 @@
-url      : 
-path     : /rpc/xmlrpc
-username :
-password :
+url      										: 
+path     										: /rpc/xmlrpc
+username 										:
+password 										:
+htmlReportTemplatePath			: resources
+htmlReportTemplateFileName	: report_template.ftl
