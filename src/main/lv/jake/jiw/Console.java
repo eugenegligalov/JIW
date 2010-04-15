@@ -2,6 +2,7 @@ package lv.jake.jiw;
 
 import com.google.inject.Inject;
 import lv.jake.jiw.services.IssueReportGenerator;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.TimerTask;
  * checking processes.
  */
 public class Console {
+    private static org.apache.log4j.Logger log = Logger.getLogger(Console.class);
     private static final String CMD_EXIT = "exit";
     private static final String CMD_REPORT = "report";
     private static final String CMD_SCHEDULE = "schedule";
@@ -37,7 +39,7 @@ public class Console {
             }
         };
         this.reportGenerator = reportGenerator;
-        System.out.println("Jira Issue Watcher");
+        log.info("Jira Issue Watcher");
     }
 
 
@@ -71,10 +73,10 @@ public class Console {
             produceReport();
         } else if (CMD_SCHEDULE.equalsIgnoreCase(input)) {
             scheduleRecurringReportGeneration();
-            System.out.println("Recurring report generation has been scheduled, once in " +
+            log.info("Recurring report generation has been scheduled, once in " +
                     REPORT_GENERATION_DELAY / 3600 + " munutes");
         } else if (input.trim().length() > 0) {
-            System.out.println("Unrecognized command");
+            log.info("Unrecognized command");
         }
         return false;
     }
@@ -88,6 +90,6 @@ public class Console {
     }
 
     private void printCommandPromptPrefix() {
-        System.out.print(">>> ");
+        log.info(">>> ");
     }
 }

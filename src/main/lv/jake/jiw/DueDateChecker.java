@@ -13,9 +13,11 @@ public class DueDateChecker {
     public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String NOT_VALID = "not valid";
     public static final String OVERDUE = "overdue";
+    public static final String SLA_OVERDUE = "sla overdue";
     public static final String NOT_COMMENTED = "not commented";
     public static final String OK = "ok";
     public static final String DUE_DATE_SOON = "due date soon";
+    public static final String SLA_SOON = "sla soon";
     public static final String DUE_DATE_NOT_SET = "due date is not set";
 
     protected final TimeService timeService;
@@ -77,8 +79,16 @@ public class DueDateChecker {
             return NOT_COMMENTED;
         }
 
-        if (getTimeDifferenceInHours(created, currentDate) > 4) {
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
+            return DUE_DATE_SOON;
+        }
+
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             return OVERDUE;
+        }
+
+        if (getTimeDifferenceInHours(created, currentDate) > 4) {
+            return SLA_OVERDUE;
         }
         return OK;
     }
@@ -94,8 +104,16 @@ public class DueDateChecker {
             return NOT_COMMENTED;
         }
 
-        if (getTimeDifferenceInDays(created, currentDate) > 2) {
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
+            return DUE_DATE_SOON;
+        }
+
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             return OVERDUE;
+        }
+
+        if (getTimeDifferenceInDays(created, currentDate) > 2) {
+            return SLA_OVERDUE;
         }
         return OK;
     }
