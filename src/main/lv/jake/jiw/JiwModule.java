@@ -20,7 +20,7 @@ public class JiwModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(String.class).annotatedWith(Names.named("configurationFileName")).toInstance(configurationFileName);
-        bind(Configuration.class).toProvider(YamlConfigurationLoader.class).in(Singleton.class);
+        bind(Configuration.class).toProvider(YamlConfigurationProvider.class).in(Singleton.class);
         bind(TimeService.class).to(TimeServiceImpl.class).in(Singleton.class);
         bind(OutputService.class).to(HtmlOutputServiceImpl.class).in(Singleton.class);
         bind(JiraService.class).to(JiraXmlRpcApi.class).in(Singleton.class);
