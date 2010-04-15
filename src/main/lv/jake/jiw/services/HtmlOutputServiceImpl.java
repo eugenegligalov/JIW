@@ -1,8 +1,6 @@
 package lv.jake.jiw.services;
 
 import com.google.inject.Inject;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lv.jake.jiw.DueDateChecker;
@@ -14,44 +12,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static lv.jake.jiw.Utils.loadFreeMarkerTemplate;
+
 /**
  * User: Jaker
  * Date: 2010.14.4
  * Time: 22:04:40
  */
 public class HtmlOutputServiceImpl implements OutputService {
-    private static org.apache.log4j.Logger log = Logger.getLogger(HtmlOutputServiceImpl.class);
-    Object[] filters = null;
-    Map issues = null;
-    DueDateChecker dueDateChecker = null;
-    Template template = null;
-    lv.jake.jiw.services.Configuration configuration = null;
+    private static Logger log = Logger.getLogger(HtmlOutputServiceImpl.class);
+
+    protected Object[] filters = null;
+    protected Map issues = null;
+    protected DueDateChecker dueDateChecker = null;
+    protected Template template = null;
+    protected Configuration configuration = null;
 
     @Inject
-    public HtmlOutputServiceImpl(DueDateChecker dueDateChecker, lv.jake.jiw.services.Configuration configuration) {
+    public HtmlOutputServiceImpl(DueDateChecker dueDateChecker, Configuration configuration) {
         this.dueDateChecker = dueDateChecker;
         this.configuration = configuration;
+        this.template = loadFreeMarkerTemplate(
+                configuration.getHtmlReportTemplatePath(), configuration.getHtmlReportTemplateFileName()
+        );
     }
 
     public void setData(Object[] filters, Map issues) {
         this.filters = filters;
         this.issues = issues;
-        readTemplate(configuration.getHtmlReportTemplatePath(), configuration.getHtmlReportTemplateFileName());
-    }
-
-    private void readTemplate(String path, String filename) {
-        Configuration configuration = new Configuration();
-        try {
-            configuration.setDirectoryForTemplateLoading(new File(path));
-        } catch (IOException e) {
-            log.error(e);
-        }
-        configuration.setObjectWrapper(new DefaultObjectWrapper());
-        try {
-            this.template = configuration.getTemplate(filename);
-        } catch (IOException e) {
-            log.error(e);
-        }
     }
 
     private void writeReport(Map issues, String file) {
@@ -95,7 +83,7 @@ public class HtmlOutputServiceImpl implements OutputService {
             String url = configuration.getUrl();
 
             url = "<A HREF=\"" + url + "/browse/" + issue.get("key") +
-                    " \">"+issue.get("key")+"</A>";
+                    "\">"+issue.get("key")+"</A>";
 
             String status = dueDateChecker.getDueDateStatus(issue.get("created").toString(),
                     (String) issue.get("duedate"), issue.get("priority").toString(),
@@ -136,4 +124,5 @@ public class HtmlOutputServiceImpl implements OutputService {
         }
         return "not found";
     }
+
 }

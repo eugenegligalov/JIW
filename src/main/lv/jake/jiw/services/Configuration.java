@@ -9,31 +9,14 @@ import java.net.URL;
  * Time: 8:27:15 PM
  */
 public class Configuration {
-
-    private String htmlReportTemplatePath;
-    private String htmlReportTemplateFileName;
     private String url;
     private String username;
     private String password;
     private String xmlRpcPath = "/rpc/xmlrpc";
+    private String htmlReportTemplatePath = ".";
+    private String htmlReportTemplateFileName = "report_template.ftl";
 
     public Configuration() {
-    }
-
-    public String getHtmlReportTemplatePath() {
-        return htmlReportTemplatePath;
-    }
-
-    public void setHtmlReportTemplatePath(String htmlReportTemplatePath) {
-        this.htmlReportTemplatePath = htmlReportTemplatePath;
-    }
-
-    public String getHtmlReportTemplateFileName() {
-        return htmlReportTemplateFileName;
-    }
-
-    public void setHtmlReportTemplateFileName(String htmlReportTemplateFileName) {
-        this.htmlReportTemplateFileName = htmlReportTemplateFileName;
     }
 
     public String getUrl() {
@@ -74,5 +57,23 @@ public class Configuration {
 
     public URL constructFullUrl() throws MalformedURLException {
         return new URL(url + xmlRpcPath);
+    }
+
+    public String getHtmlReportTemplatePath() {
+        return htmlReportTemplatePath;
+    }
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    public void setHtmlReportTemplatePath(String htmlReportTemplatePath) {
+        this.htmlReportTemplatePath = htmlReportTemplatePath;
+    }
+
+    public String getHtmlReportTemplateFileName() {
+        return htmlReportTemplateFileName;
+    }
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    public void setHtmlReportTemplateFileName(String htmlReportTemplateFileName) {
+        this.htmlReportTemplateFileName = htmlReportTemplateFileName;
     }
 }
