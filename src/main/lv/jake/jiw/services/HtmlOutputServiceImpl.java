@@ -1,4 +1,4 @@
-package lv.jake.jiw.output;
+package lv.jake.jiw.services;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;

@@ -1,7 +1,7 @@
 package lv.jake.jiw;
 
-import lv.jake.jiw.yaml.Configuration;
-import lv.jake.jiw.yaml.ConfigurationService;
+import lv.jake.jiw.services.Configuration;
+import lv.jake.jiw.services.ConfigurationService;
 import org.apache.log4j.Logger;
 
 public class PropertyReader {

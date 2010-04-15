@@ -1,4 +1,4 @@
-package lv.jake.jiw.output;
+package lv.jake.jiw.services;
 
 import lv.jake.jiw.DueDateChecker;
 import lv.jake.jiw.TimeServiceImpl;

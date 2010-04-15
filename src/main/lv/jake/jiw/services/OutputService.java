@@ -1,4 +1,4 @@
-package lv.jake.jiw.output;
+package lv.jake.jiw.services;
 
 import java.util.Map;
 

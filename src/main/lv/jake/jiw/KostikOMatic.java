@@ -1,9 +1,8 @@
 package lv.jake.jiw;
 
-import lv.jake.jiw.output.HtmlOutputServiceImpl;
-import lv.jake.jiw.output.OutputService;
-import lv.jake.jiw.output.ScreenOutputServiceImpl;
-import lv.jake.jiw.yaml.YamlConfigurationService;
+import lv.jake.jiw.services.HtmlOutputServiceImpl;
+import lv.jake.jiw.services.OutputService;
+import lv.jake.jiw.services.YamlConfigurationService;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.client.XmlRpcClient;
 
