@@ -4,9 +4,12 @@ import junit.framework.TestCase;
 import lv.jake.jiw.domain.JiraIssue;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+
+import static org.mockito.Mockito.*;
 
 /**
  * Author: Konstantin Zmanovsky
@@ -23,7 +26,12 @@ public class JiraXmlRpcApiTest extends TestCase {
         map.put("duedate", "2010-04-22 00:00:00.0");
         map.put("updated", "2010-04-07 13:38:53.0");
 
-        final JiraIssue issue = new JiraXmlRpcApi(null).convertMapToJiraIssue(map);
+        final Configuration configuration = mock(Configuration.class);
+        when(configuration.constructFullUrl()).thenReturn(new URL("http://a/"));
+
+        final JiraIssue issue = new JiraXmlRpcApi(configuration).convertMapToJiraIssue(map);
+
+        verify(configuration).constructFullUrl();
 
         Calendar calendarCreated = new GregorianCalendar(2010, 2, 22, 12, 35, 37);
         Calendar calendarDue = new GregorianCalendar(2010, 3, 22, 0, 0, 0);
