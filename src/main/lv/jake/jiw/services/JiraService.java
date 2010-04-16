@@ -15,7 +15,7 @@ public interface JiraService {
 
     Object[] getIssuesFromFilter(String id);
 
-    Map getIssuesFromFilters(Object[] filters);
+    Map getIssuesFromFilters(Object[] filters) throws JiwServiceException;
 
     Object[] getComments(String issueId);
 

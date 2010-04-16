@@ -2,9 +2,14 @@ package lv.jake.jiw.services;
 
 import com.google.inject.Inject;
 import lv.jake.jiw.DueDateChecker;
+import lv.jake.jiw.Utils;
+import lv.jake.jiw.domain.JiraIssue;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.Map;
+
+import static lv.jake.jiw.Utils.getPriorityById;
 
 /**
  * User: Jaker
@@ -36,19 +41,19 @@ public class ScreenOutputServiceImpl implements OutputService {
     }
 
     public void showIssueDetail(Map issues, String currentIssues) {
-        for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
-            Map issue = (Map) currentIssue;
-            log.info("Key: " + issue.get("key") /*+ " - created: " +
+        //noinspection unchecked
+        for (JiraIssue currentIssue : (List<JiraIssue>) issues.get(currentIssues)) {
+            log.info("Key: " + currentIssue.getKey() /*+ " - created: " +
                     issue.get("created") + " - updated: " + issue.get("updated")"*/ +
-                    " - Due date: " + issue.get("duedate") + "- Priority: " +
-                    getPriorityById(issue.get("priority").toString()) +
-                    " /-/ STATUS: " + dueDateChecker.getDueDateStatus(issue.get("created").toString(),
-                    (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString()));
-            if (!DueDateChecker.OK.equals(dueDateChecker.getDueDateStatus(issue.get("created").toString(),
-                    (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString())))
-                log.info("||--Summary: " + issue.get("summary"));
+                    " - Due date: " + currentIssue.getDueDate() + "- Priority: " +
+                    getPriorityById(currentIssue.getPriority()) +
+                    " /-/ STATUS: " + dueDateChecker.getDueDateStatus(currentIssue.getCreatedDate(),
+                    currentIssue.getDueDate(), currentIssue.getPriority(),
+                    currentIssue.getLastUpdateDate()));
+            if (!DueDateChecker.OK.equals(dueDateChecker.getDueDateStatus(currentIssue.getCreatedDate(),
+                    currentIssue.getDueDate(), currentIssue.getPriority(),
+                    currentIssue.getLastUpdateDate())))
+                log.info("||--Summary: " + currentIssue.getSummary());
 //            Object[] comments = null;
 //                comments = lv.jake.jiw.getComments(rpcclient, loginToken, (String) issue.get("key"));
 //                log.info("comments count: " + comments.length);
@@ -56,22 +61,4 @@ public class ScreenOutputServiceImpl implements OutputService {
 
     }
 
-    public String getPriorityById(String id) {
-        if (Integer.valueOf(id) == 1) {
-            return "Blocker";
-        }
-        if (Integer.valueOf(id) == 2) {
-            return "Critical";
-        }
-        if (Integer.valueOf(id) == 3) {
-            return "Major";
-        }
-        if (Integer.valueOf(id) == 4) {
-            return "Minor";
-        }
-        if (Integer.valueOf(id) == 5) {
-            return "Trivial";
-        }
-        return "not found";
-    }
 }

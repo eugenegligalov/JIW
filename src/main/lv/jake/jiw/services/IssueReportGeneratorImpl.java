@@ -18,7 +18,7 @@ public class IssueReportGeneratorImpl implements IssueReportGenerator {
         this.jiraService = jiraService;
     }
 
-    public void run() {
+    public void run() throws JiwServiceException {
         lazyInit();
 
         jiraService.login();

@@ -2,6 +2,7 @@ package lv.jake.jiw;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import lv.jake.jiw.services.JiwServiceException;
 
 /**
  * Author: Konstantin Zmanovsky
@@ -9,7 +10,7 @@ import com.google.inject.Injector;
  * Time: 4:46:03 PM
  */
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JiwServiceException {
         final Injector injector = Guice.createInjector(new JiwModule(args[0]));
 
         final Console console = injector.getInstance(Console.class);

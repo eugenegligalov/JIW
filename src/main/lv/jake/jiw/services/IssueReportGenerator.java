@@ -6,5 +6,5 @@ package lv.jake.jiw.services;
  * Time: 6:43:47 PM
  */
 public interface IssueReportGenerator {
-    void run();
+    void run() throws JiwServiceException;
 }

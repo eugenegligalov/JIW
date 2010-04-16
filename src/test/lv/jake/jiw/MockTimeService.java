@@ -11,7 +11,13 @@ import java.util.GregorianCalendar;
 * Time: 8:27:10 PM
 */
 class MockTimeService implements TimeService {
+    protected GregorianCalendar calendar;
+
+    public MockTimeService() {
+        calendar = new GregorianCalendar(2000, 12-1, 2, 10, 40, 0);
+    }
+
     public Calendar getCalendar() {
-        return new GregorianCalendar(2000, 12-1, 2, 10, 40, 0 );
+        return calendar;
     }
 }

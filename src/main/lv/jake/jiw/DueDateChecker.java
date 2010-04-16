@@ -4,13 +4,12 @@ import com.google.inject.Inject;
 import lv.jake.jiw.services.TimeService;
 import org.apache.log4j.Logger;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DueDateChecker {
     private static org.apache.log4j.Logger log = Logger.getLogger(DueDateChecker.class);
-    public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static final String NOT_VALID = "not valid";
     public static final String OVERDUE = "overdue";
     public static final String SLA_OVERDUE = "sla overdue";
@@ -27,29 +26,16 @@ public class DueDateChecker {
         this.timeService = timeService;
     }
 
-    public String getDueDateStatus(String created, String duedate, String priority, String updated) {
-        Calendar createdDateCalendar = null;
+    public String getDueDateStatus(Date created, Date duedate, String priority, Date updated) {
+        Calendar createdDateCalendar = createCalendarFromDate(created);
+        Calendar updatedDateCalendar = createCalendarFromDate(updated);
         Calendar dueDateCalendar = null;
-        Calendar updatedDateCalendar = null;
-        SimpleDateFormat createdDateParser = new SimpleDateFormat(DATE_PATTERN);
-        SimpleDateFormat duedateParser = new SimpleDateFormat(DATE_PATTERN);
-        SimpleDateFormat updateDateParser = new SimpleDateFormat(DATE_PATTERN);
-        try {
-            if (duedate != null) {
-                duedateParser.parse(duedate);
-                dueDateCalendar = duedateParser.getCalendar();
-                dueDateCalendar.set(Calendar.HOUR, 18);
-                dueDateCalendar.set(Calendar.MINUTE, 0);
-            }
-            updateDateParser.parse(updated);
-            createdDateParser.parse(created);
-
-
-            createdDateCalendar = createdDateParser.getCalendar();
-            updatedDateCalendar = updateDateParser.getCalendar();
-        } catch (ParseException e) {
-            log.error(e);
+        if (duedate != null) {
+            dueDateCalendar = createCalendarFromDate(duedate);
+            dueDateCalendar.set(Calendar.HOUR, 18);
+            dueDateCalendar.set(Calendar.MINUTE, 0);
         }
+
         if (Integer.valueOf(priority) == 1) {
             return getStatusForBlocker(dueDateCalendar, updatedDateCalendar, createdDateCalendar);
         }
@@ -66,6 +52,13 @@ public class DueDateChecker {
             return getStatusForTrivial(dueDateCalendar, updatedDateCalendar, createdDateCalendar);
         }
         return NOT_VALID;
+    }
+
+    private Calendar createCalendarFromDate(Date created) {
+        Calendar createdDateCalendar;
+        createdDateCalendar = GregorianCalendar.getInstance();
+        createdDateCalendar.setTime(created);
+        return createdDateCalendar;
     }
 
     public String getStatusForBlocker(Calendar duedate, Calendar updated, Calendar created) {
@@ -108,7 +101,7 @@ public class DueDateChecker {
             return DUE_DATE_SOON;
         }
 
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
+        if (duedate != null && getTimeDifferenceInMinutes(currentDate, duedate) <= 0) {
             return OVERDUE;
         }
 

@@ -2,6 +2,7 @@ package lv.jake.jiw;
 
 import com.google.inject.Inject;
 import lv.jake.jiw.services.IssueReportGenerator;
+import lv.jake.jiw.services.JiwServiceException;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
@@ -19,7 +20,8 @@ import java.util.TimerTask;
  * checking processes.
  */
 public class Console {
-    private static org.apache.log4j.Logger log = Logger.getLogger(Console.class);
+    private static final org.apache.log4j.Logger log = Logger.getLogger(Console.class);
+
     private static final String CMD_EXIT = "exit";
     private static final String CMD_REPORT = "report";
     private static final String CMD_SCHEDULE = "schedule";
@@ -35,7 +37,12 @@ public class Console {
         reportingTask = new TimerTask() {
             @Override
             public void run() {
-                produceReport();
+                try {
+                    produceReport();
+                } catch (JiwServiceException e) {
+                    log.error(e);
+                    this.cancel();
+                }
             }
         };
         this.reportGenerator = reportGenerator;
@@ -43,7 +50,7 @@ public class Console {
     }
 
 
-    public void startProcessingUserInput() {
+    public void startProcessingUserInput() throws JiwServiceException {
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         boolean exit = false;
@@ -62,7 +69,7 @@ public class Console {
         timer.cancel();
     }
 
-    private boolean processUserInput(String input) {
+    private boolean processUserInput(String input) throws JiwServiceException {
         if (null == input) {
             // exit on end of stream
             return false;
@@ -81,7 +88,7 @@ public class Console {
         return false;
     }
 
-    private void produceReport() {
+    private void produceReport() throws JiwServiceException {
         reportGenerator.run();
     }
 
@@ -90,6 +97,6 @@ public class Console {
     }
 
     private void printCommandPromptPrefix() {
-        System.out.println(">>> ");
+        System.out.print(">>> ");
     }
 }

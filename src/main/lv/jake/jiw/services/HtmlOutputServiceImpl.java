@@ -4,13 +4,12 @@ import com.google.inject.Inject;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lv.jake.jiw.DueDateChecker;
+import lv.jake.jiw.domain.JiraIssue;
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static lv.jake.jiw.Utils.loadFreeMarkerTemplate;
 
@@ -20,7 +19,8 @@ import static lv.jake.jiw.Utils.loadFreeMarkerTemplate;
  * Time: 22:04:40
  */
 public class HtmlOutputServiceImpl implements OutputService {
-    private static Logger log = Logger.getLogger(HtmlOutputServiceImpl.class);
+    private static final Logger log = Logger.getLogger(HtmlOutputServiceImpl.class);
+    private static final SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:ss");
 
     protected Object[] filters = null;
     protected Map issues = null;
@@ -78,26 +78,40 @@ public class HtmlOutputServiceImpl implements OutputService {
 
     public List getIssueDetail(Map issues, String currentIssues) {
         List issuesArray = new ArrayList();
-        for (Object currentIssue : (Object[]) issues.get(currentIssues)) {
-            Map issue = (Map) currentIssue;
+        //noinspection unchecked
+        for (JiraIssue currentIssue : (List<JiraIssue>) issues.get(currentIssues)) {
             String url = configuration.getUrl();
 
-            url = "<A HREF=\"" + url + "/browse/" + issue.get("key") +
-                    "\">"+issue.get("key")+"</A>";
+            url = "<A HREF=\"" + url + "/browse/" + currentIssue.getKey() +
+                    "\">" + currentIssue.getKey() + "</A>";
 
-            String status = dueDateChecker.getDueDateStatus(issue.get("created").toString(),
-                    (String) issue.get("duedate"), issue.get("priority").toString(),
-                    issue.get("updated").toString());
+
+            String status = dueDateChecker.getDueDateStatus(currentIssue.getCreatedDate(),
+                    currentIssue.getDueDate(), currentIssue.getPriority(),
+                    currentIssue.getLastUpdateDate());
 
             String issueDetail = "<TD>" + url + "</TD>\n<TD>" +
-                    issue.get("created") + "</TD>\n<TD>" + issue.get("updated") +
-                    "</TD>\n<TD>" + issue.get("duedate") + "</TD>\n<TD>" +
-                    getPriorityById(issue.get("priority").toString()) +
-                    "</TD>\n<TD>" + status +
-                    "</TD>\n<TD>" + issue.get("summary") + "</TD>";
+                    formatDate(currentIssue.getCreatedDate()) + "</TD>\n<TD>" +
+                    formatDate(currentIssue.getLastUpdateDate()) + "</TD>\n<TD>" +
+                    formatNullableDate(currentIssue.getDueDate()) + "</TD>\n<TD>" +
+                    getPriorityById(currentIssue.getPriority()) + "</TD>\n<TD>" +
+                    status + "</TD>\n<TD>" +
+                    currentIssue.getSummary() + "</TD>";
             issuesArray.add(issueDetail);
         }
         return issuesArray;
+    }
+
+    private String formatNullableDate(final Date date) {
+        if (date == null) {
+            return "N/A";
+        } else {
+            return formatDate(date);
+        }
+    }
+
+    private String formatDate(final Date date) {
+        return outputDateFormat.format(date);
     }
 
     public void showIssueDetail(Map issues, String currentIssues) {
