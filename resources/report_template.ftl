@@ -15,12 +15,20 @@
   <TH>Status</TH>
   <TH>Summary</TH>
  </TR>
-<#list issues as x>
-	<TR>${x}<#if x_has_next></TR></#if>
-</#list>  
- </TR>
+<#list sections as section>
+  <TR><TD><B>${section.getFilter().getName()}</B></TD></TR>
+  <#list section.getRows() as row>
+  <TR>
+    <TD><A HREF="${row.getJiraIssueUrl()}">${row.getKey()}</A></TD>
+    <TD>${row.getCreatedDate()}</TD>
+    <TD>${row.getLastUpdateDate()}</TD>
+    <TD>${row.getDueDate()}</TD>
+    <TD>${row.getPriority()}</TD>
+    <TD>${row.getStatus()}</TD>
+    <TD>${row.getSummary()}</TD>
+  </TR>
+  </#list>
+</#list>
 </TABLE>
-
-
 </BODY>
 </HTML>

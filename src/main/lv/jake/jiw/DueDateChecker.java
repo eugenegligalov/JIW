@@ -1,7 +1,7 @@
 package lv.jake.jiw;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.services.TimeService;
+import lv.jake.jiw.application.TimeService;
 import org.apache.log4j.Logger;
 
 import java.util.Calendar;

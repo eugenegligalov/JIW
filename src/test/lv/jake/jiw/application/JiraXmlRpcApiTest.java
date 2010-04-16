@@ -1,4 +1,4 @@
-package lv.jake.jiw.services;
+package lv.jake.jiw.application;
 
 import junit.framework.TestCase;
 import lv.jake.jiw.domain.JiraIssue;
@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import static org.mockito.Mockito.*;
 /**
  * Author: Konstantin Zmanovsky
  * Date: Apr 16, 2010
@@ -24,11 +23,11 @@ public class JiraXmlRpcApiTest extends TestCase {
         map.put("duedate", "2010-04-22 00:00:00.0");
         map.put("updated", "2010-04-07 13:38:53.0");
 
-        final JiraIssue issue = JiraXmlRpcApi.convertMapToJiraIssue(map);
+        final JiraIssue issue = new JiraXmlRpcApi(null).convertMapToJiraIssue(map);
 
-        Calendar calendarCreated = new GregorianCalendar(2010, 02, 22, 12, 35, 37);
-        Calendar calendarDue = new GregorianCalendar(2010, 03, 22, 0, 0, 0);
-        Calendar calendarLastUpdated = new GregorianCalendar(2010, 03, 07, 13, 38, 53);
+        Calendar calendarCreated = new GregorianCalendar(2010, 2, 22, 12, 35, 37);
+        Calendar calendarDue = new GregorianCalendar(2010, 3, 22, 0, 0, 0);
+        Calendar calendarLastUpdated = new GregorianCalendar(2010, 3, 7, 13, 38, 53);
 
         assertEquals("ISU-1", issue.getKey());
         assertEquals("Issue Summary", issue.getSummary());

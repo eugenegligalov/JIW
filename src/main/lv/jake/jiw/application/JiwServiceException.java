@@ -1,6 +1,4 @@
-package lv.jake.jiw.services;
-
-import java.text.ParseException;
+package lv.jake.jiw.application;
 
 /**
  * Author: Konstantin Zmanovsky

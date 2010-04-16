@@ -1,7 +1,7 @@
-package lv.jake.jiw.services;
+package lv.jake.jiw.application;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.Utils;
+import lv.jake.jiw.domain.JiraFilter;
 import lv.jake.jiw.domain.JiraIssue;
 import org.apache.log4j.Logger;
 import org.apache.xmlrpc.XmlRpcException;
@@ -51,18 +51,43 @@ public class JiraXmlRpcApi implements JiraService {
         this.loginTokenVector = loginTokenVector;
     }
 
-    public Object[] getFavouriteFilters() {
-        Object object = null;
+    public List<JiraFilter> getFavouriteFilters() throws JiwServiceException {
+        Object object;
         try {
             object = rpcclient.execute("jira1.getFavouriteFilters", loginTokenVector);
         } catch (XmlRpcException e) {
-            log.error(e);
+            throw new JiwServiceException("Error loading favorire filter list from JIRA", e);
         }
-        return (Object[]) object;
+        @SuppressWarnings({"unchecked"})
+
+        final Object[] filterObjects = (Object[]) object;
+
+        List<JiraFilter> filters = new LinkedList<JiraFilter>();
+        for (Object o : filterObjects) {
+            filters.add(convertMapToJiraFilter((Map<String, String>)o));
+        }
+        return filters;
     }
 
-    public List<JiraIssue> getIssuesFromFilter_Object(String id) throws JiwServiceException {
-        return convertIssueListToJiraIssues(getIssuesFromFilter(id));
+    public Map<String, List<JiraIssue>> getIssueMapFromFilters(final List<JiraFilter> filters)
+            throws JiwServiceException
+    {
+        final Map<String, List<JiraIssue>> filterIssueMap = new HashMap<String, List<JiraIssue>>();
+        for (JiraFilter filter : filters) {
+            final String filterId = filter.getId();
+            filterIssueMap.put(filter.getId(), loadIssuesByFilter(filterId));
+        }
+        return filterIssueMap;
+    }
+
+    private List<JiraIssue> loadIssuesByFilter(String filterId) throws JiwServiceException {
+        final ArrayList<JiraIssue> list = new ArrayList<JiraIssue>();
+        for (Object object : getIssuesFromFilter(filterId)) {
+            @SuppressWarnings({"unchecked"})
+            final JiraIssue issue = convertMapToJiraIssue((Map<String, String>) object);
+            list.add(issue);
+        }
+        return list;
     }
 
     public Object[] getIssuesFromFilter(String id) {
@@ -75,16 +100,6 @@ public class JiraXmlRpcApi implements JiraService {
             log.error(e);
         }
         return (Object[]) object;
-    }
-
-    public Map getIssuesFromFilters(Object[] filters) throws JiwServiceException {
-        Map projects = new HashMap();
-        for (Object filter : filters) {
-            Map project = (Map) filter;
-            //noinspection unchecked
-            projects.put(project.get("id"), getIssuesFromFilter_Object((String) project.get("id")));
-        }
-        return projects;
     }
 
     public Object[] getComments(String issueId) {
@@ -109,17 +124,15 @@ public class JiraXmlRpcApi implements JiraService {
         log.info("Logout successful: " + bool);
     }
 
-    public static List<JiraIssue> convertIssueListToJiraIssues(Object[] objects) throws JiwServiceException {
-        final ArrayList<JiraIssue> list = new ArrayList<JiraIssue>();
-        for (Object object : objects) {
-            @SuppressWarnings({"unchecked"})
-            JiraIssue issue = convertMapToJiraIssue((Map<String, String>) object);
-            list.add(issue);
-        }
-        return list;
+
+    public JiraFilter convertMapToJiraFilter(Map<String, String> map) throws JiwServiceException {
+        JiraFilter filter = new JiraFilter();
+        filter.setId(map.get("id"));
+        filter.setName(map.get("name"));
+        return filter;
     }
 
-    public static JiraIssue convertMapToJiraIssue(Map<String, String> map) throws JiwServiceException {
+    public JiraIssue convertMapToJiraIssue(Map<String, String> map) throws JiwServiceException {
         JiraIssue issue = new JiraIssue();
         issue.setKey(map.get("key"));
         issue.setSummary(map.get("summary"));

@@ -1,4 +1,4 @@
-package lv.jake.jiw.services;
+package lv.jake.jiw.application;
 
 /**
  * Author: Konstantin Zmanovsky

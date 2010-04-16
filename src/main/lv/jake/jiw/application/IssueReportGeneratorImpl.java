@@ -1,8 +1,12 @@
-package lv.jake.jiw.services;
+package lv.jake.jiw.application;
 
 import com.google.inject.Inject;
+import lv.jake.jiw.domain.JiraFilter;
+import lv.jake.jiw.domain.JiraIssue;
+import lv.jake.jiw.presentation.OutputService;
 import org.apache.log4j.Logger;
 
+import java.util.List;
 import java.util.Map;
 
 public class IssueReportGeneratorImpl implements IssueReportGenerator {
@@ -23,14 +27,12 @@ public class IssueReportGeneratorImpl implements IssueReportGenerator {
 
         jiraService.login();
 
-        Object[] filters;
-        filters = jiraService.getFavouriteFilters();
+        List<JiraFilter> filters = jiraService.getFavouriteFilters();
 
-        Map issues;
-        issues = jiraService.getIssuesFromFilters(filters);
+        Map<String, List<JiraIssue>> issues = jiraService.getIssueMapFromFilters(filters);
 
         outputService.setData(filters, issues);
-        outputService.printOutput();
+        outputService.generateReport();
 
         jiraService.logout();
     }

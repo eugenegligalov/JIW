@@ -1,4 +1,4 @@
-package lv.jake.jiw.services;
+package lv.jake.jiw.application;
 
 import java.net.MalformedURLException;
 import java.net.URL;

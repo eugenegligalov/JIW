@@ -1,8 +1,8 @@
 package lv.jake.jiw;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.services.IssueReportGenerator;
-import lv.jake.jiw.services.JiwServiceException;
+import lv.jake.jiw.application.IssueReportGenerator;
+import lv.jake.jiw.application.JiwServiceException;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
