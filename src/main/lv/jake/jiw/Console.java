@@ -90,6 +90,6 @@ public class Console {
     }
 
     private void printCommandPromptPrefix() {
-        System.out.println(">>> ");
+        System.out.print(">>> ");
     }
 }
