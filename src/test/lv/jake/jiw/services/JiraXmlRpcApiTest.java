@@ -20,17 +20,20 @@ public class JiraXmlRpcApiTest extends TestCase {
         map.put("key", "ISU-1");
         map.put("summary", "Issue Summary");
         map.put("priority", "Critical");
+        map.put("created", "2010-03-22 12:35:37.0");
         map.put("duedate", "2010-04-22 00:00:00.0");
         map.put("updated", "2010-04-07 13:38:53.0");
 
         final JiraIssue issue = JiraXmlRpcApi.convertMapToJiraIssue(map);
 
+        Calendar calendarCreated = new GregorianCalendar(2010, 02, 22, 12, 35, 37);
         Calendar calendarDue = new GregorianCalendar(2010, 03, 22, 0, 0, 0);
         Calendar calendarLastUpdated = new GregorianCalendar(2010, 03, 07, 13, 38, 53);
 
         assertEquals("ISU-1", issue.getKey());
         assertEquals("Issue Summary", issue.getSummary());
         assertEquals("Critical", issue.getPriority());
+        assertEquals(calendarCreated.getTime(), issue.getCreatedDate());
         assertEquals(calendarDue.getTime(), issue.getDueDate());
         assertEquals(calendarLastUpdated.getTime(), issue.getLastUpdateDate());
     }
