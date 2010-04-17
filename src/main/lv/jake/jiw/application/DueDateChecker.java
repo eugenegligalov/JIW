@@ -1,8 +1,6 @@
 package lv.jake.jiw.application;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.application.IssueStatus;
-import lv.jake.jiw.application.TimeService;
 import org.apache.log4j.Logger;
 
 import java.util.Calendar;
@@ -56,113 +54,91 @@ public class DueDateChecker {
 
     public IssueStatus getStatusForBlocker(Calendar duedate, Calendar updated, Calendar created) {
         IssueStatus status = new IssueStatus();
-        status.setOk(true);
         Calendar currentDate = timeService.getCalendar();
 
         if (duedate == null && getTimeDifferenceInMinutes(created, currentDate) > 10) {
             status.setDueDateNotSet(true);
-            status.setOk(false);
         }
 
         if (getTimeDifferenceInMinutes(updated, currentDate) > 58) {
             status.setNotCommented(true);
-            status.setOk(false);
         }
 
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             status.setDueDateSoon(true);
-            status.setOk(false);
         }
 
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             status.setOverdue(true);
-            status.setOk(false);
         }
 
         if (getTimeDifferenceInHours(created, currentDate) > 4) {
             status.setSlaOverdue(true);
-            status.setOk(false);
         }
         return status;
     }
 
     public IssueStatus getStatusForCritical(Calendar duedate, Calendar updated, Calendar created) {
         IssueStatus status = new IssueStatus();
-        status.setOk(true);
         Calendar currentDate = timeService.getCalendar();
 
         if (duedate == null && getTimeDifferenceInMinutes(updated, currentDate) > 30) {
             status.setDueDateNotSet(true);
-            status.setOk(false);
         }
 
         if (getTimeDifferenceInHours(updated, currentDate) > 4) {
             status.setNotCommented(true);
-            status.setOk(false);
         }
 
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             status.setDueDateSoon(true);
-            status.setOk(false);
         }
 
         if (duedate != null && getTimeDifferenceInMinutes(currentDate, duedate) <= 0) {
             status.setOverdue(true);
-            status.setOk(false);
         }
 
         if (getTimeDifferenceInDays(created, currentDate) > 2) {
             status.setSlaOverdue(true);
-            status.setOk(false);
         }
         return status;
     }
 
     public IssueStatus getStatusForMajor(Calendar duedate, Calendar updated, Calendar created) {
         IssueStatus status = new IssueStatus();
-        status.setOk(true);
         Calendar currentDate = timeService.getCalendar();
         if (duedate == null && getTimeDifferenceInHours(created, currentDate) > 24) {
             status.setDueDateNotSet(true);
-            status.setOk(false);
         }
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             status.setDueDateSoon(true);
-            status.setOk(false);
         }
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             status.setOverdue(true);
-            status.setOk(false);
         }
         return status;
     }
 
     public IssueStatus getStatusForMinor(Calendar duedate, Calendar updated, Calendar created) {
         IssueStatus status = new IssueStatus();
-        status.setOk(true);
         Calendar currentDate = timeService.getCalendar();
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             status.setDueDateSoon(true);
-            status.setOk(false);
         }
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             status.setOverdue(true);
-            status.setOk(false);
         }
         return status;
     }
 
     public IssueStatus getStatusForTrivial(Calendar duedate, Calendar updated, Calendar created) {
         IssueStatus status = new IssueStatus();
-        status.setOk(true);
         Calendar currentDate = timeService.getCalendar();
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
             status.setDueDateSoon(true);
-            status.setOk(false);
         }
         if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             status.setOverdue(true);
-            status.setOk(false);
         }
         return status;
     }

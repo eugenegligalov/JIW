@@ -25,7 +25,7 @@ public class IssueStatus {
     protected boolean notValid = false;
 
     public boolean isOk() {
-        return ok;
+        return !( slaSoon || slaOverdue || notCommented || dueDateNotSet || dueDateSoon || overdue || notValid );
     }
 
     public boolean isSlaSoon() {
@@ -54,10 +54,6 @@ public class IssueStatus {
 
     public boolean isNotValid() {
         return notValid;
-    }
-
-    public void setOk(boolean ok) {
-        this.ok = ok;
     }
 
     public void setSlaSoon(boolean slaSoon) {
