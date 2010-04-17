@@ -1,6 +1,7 @@
 package lv.jake.jiw;
 
 import junit.framework.TestCase;
+import lv.jake.jiw.domain.IssueStatus;
 
 import java.util.GregorianCalendar;
 
@@ -16,27 +17,36 @@ public class DueDateCheckerTest extends TestCase {
     public void testGetStatusForBlocker() {
         DueDateChecker dueDateChecker = new DueDateChecker(timeService);
 
-        assertEquals(DueDateChecker.DUE_DATE_NOT_SET,
+        assertEquals(true,
                 dueDateChecker.getDueDateStatus(
                         new GregorianCalendar(2000, 11, 2, 10, 28, 0).getTime(),
                         null, "1",
                         new GregorianCalendar(2000, 11, 2, 10, 31, 0).getTime()
-                )
+                ).isDueDateNotSet()
         );
-        assertEquals(DueDateChecker.OK,
+        assertEquals(true,
                 dueDateChecker.getDueDateStatus(
                         new GregorianCalendar(2000, 11, 2, 10, 35, 0).getTime(),
                         null, "1",
                         new GregorianCalendar(2000, 11, 2, 10, 31, 0).getTime()
-                )
+                ).isOk()
         );
-        assertEquals(DueDateChecker.NOT_COMMENTED,
+        assertEquals(true,
                 dueDateChecker.getDueDateStatus(
                         new GregorianCalendar(2000, 11, 2, 8, 40, 0).getTime(),
                         new GregorianCalendar(2000, 11, 2, 12, 31, 0).getTime(),
                         "1",
                         new GregorianCalendar(2000, 11, 2, 9, 38, 0).getTime()
-                )
+                ).isNotCommented()
+        );
+
+        assertEquals(true,
+                dueDateChecker.getDueDateStatus(
+                        new GregorianCalendar(2000, 11, 1, 8, 40, 0).getTime(),
+                        new GregorianCalendar(2000, 11, 1, 12, 31, 0).getTime(),
+                        "2",
+                        new GregorianCalendar(2000, 11, 1, 9, 38, 0).getTime()
+                ).isOverdue()
         );
 
         assertEquals(dueDateChecker.getTimeDifferenceInDays(timeService.getCalendar(), timeService.getCalendar()), 0);

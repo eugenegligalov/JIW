@@ -56,7 +56,7 @@ public class JiraXmlRpcApi implements JiraService {
         try {
             object = rpcclient.execute("jira1.getFavouriteFilters", loginTokenVector);
         } catch (XmlRpcException e) {
-            throw new JiwServiceException("Error loading favorire filter list from JIRA", e);
+            throw new JiwServiceException("Error loading favorite filter list from JIRA", e);
         }
         @SuppressWarnings({"unchecked"})
 

@@ -1,5 +1,7 @@
 package lv.jake.jiw.presentation;
 
+import lv.jake.jiw.domain.IssueStatus;
+
 /**
  * Author: Konstantin Zmanovsky
  * Date: Apr 17, 2010
@@ -7,7 +9,7 @@ package lv.jake.jiw.presentation;
  */
 public class ReportSectionRow {
     private final String key;
-    private final String status;
+    private final IssueStatus status;
     private final String summary;
     private final String priority;
     private final String createdDate;
@@ -15,7 +17,7 @@ public class ReportSectionRow {
     private final String dueDate;
     private final String jiraIssueUrl;
 
-    public ReportSectionRow(String key, String summary, String status, String priority,
+    public ReportSectionRow(String key, String summary, IssueStatus status, String priority,
                             String createdDate, String lastUpdateDate, String dueDate, String jiraIssueUrl) {
         this.key = key;
         this.summary = summary;
@@ -43,7 +45,7 @@ public class ReportSectionRow {
     }
 
     @SuppressWarnings({"UnusedDeclaration"})
-    public String getStatus() {
+    public IssueStatus getStatus() {
         return status;
     }
 

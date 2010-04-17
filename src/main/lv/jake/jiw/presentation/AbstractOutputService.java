@@ -2,6 +2,7 @@ package lv.jake.jiw.presentation;
 
 import lv.jake.jiw.DueDateChecker;
 import lv.jake.jiw.application.Configuration;
+import lv.jake.jiw.domain.IssueStatus;
 import lv.jake.jiw.domain.JiraFilter;
 import lv.jake.jiw.domain.JiraIssue;
 
@@ -59,7 +60,7 @@ public abstract class AbstractOutputService implements OutputService {
         return configuration.getUrl() + "/browse/" + issue.getKey();
     }
 
-    private String getIssueStatus(JiraIssue issue) {
+    private IssueStatus getIssueStatus(JiraIssue issue) {
         return dueDateChecker.getDueDateStatus(issue.getCreatedDate(),
                 issue.getDueDate(), issue.getPriority(),
                 issue.getLastUpdateDate());

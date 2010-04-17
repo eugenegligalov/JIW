@@ -3,6 +3,7 @@ package lv.jake.jiw.presentation;
 import com.google.inject.Inject;
 import lv.jake.jiw.DueDateChecker;
 import lv.jake.jiw.application.Configuration;
+import lv.jake.jiw.domain.IssueStatus;
 import lv.jake.jiw.domain.JiraFilter;
 import lv.jake.jiw.domain.JiraIssue;
 import org.apache.log4j.Logger;
@@ -31,7 +32,7 @@ public class ScreenOutputServiceImpl extends AbstractOutputService {
                 log.info("Key: " + row.getKey() +
                         " - Due date: " + row.getDueDate() + "- Priority: " + row.getPriority() +
                         " /-/ STATUS: " + row.getStatus());
-                if (!DueDateChecker.OK.equals(row.getStatus())) {
+                if (!row.getStatus().isOk()) {
                     log.info("||--Summary: " + row.getSummary());
                 }
             }
