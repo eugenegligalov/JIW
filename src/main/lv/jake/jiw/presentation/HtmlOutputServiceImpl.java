@@ -3,7 +3,7 @@ package lv.jake.jiw.presentation;
 import com.google.inject.Inject;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import lv.jake.jiw.DueDateChecker;
+import lv.jake.jiw.application.DueDateChecker;
 import lv.jake.jiw.presentation.ReportSection;
 import lv.jake.jiw.application.Configuration;
 import org.apache.log4j.Logger;

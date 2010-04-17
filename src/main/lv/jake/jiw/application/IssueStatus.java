@@ -1,4 +1,4 @@
-package lv.jake.jiw.domain;
+package lv.jake.jiw.application;
 
 /**
  * User: Eugene Gligalov

@@ -1,8 +1,8 @@
-package lv.jake.jiw;
+package lv.jake.jiw.application;
 
 import com.google.inject.Inject;
+import lv.jake.jiw.application.IssueStatus;
 import lv.jake.jiw.application.TimeService;
-import lv.jake.jiw.domain.IssueStatus;
 import org.apache.log4j.Logger;
 
 import java.util.Calendar;

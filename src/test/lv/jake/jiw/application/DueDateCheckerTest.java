@@ -1,7 +1,7 @@
-package lv.jake.jiw;
+package lv.jake.jiw.application;
 
 import junit.framework.TestCase;
-import lv.jake.jiw.domain.IssueStatus;
+import lv.jake.jiw.application.DueDateChecker;
 
 import java.util.GregorianCalendar;
 

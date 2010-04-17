@@ -1,6 +1,6 @@
 package lv.jake.jiw.presentation;
 
-import lv.jake.jiw.domain.IssueStatus;
+import lv.jake.jiw.application.IssueStatus;
 
 /**
  * Author: Konstantin Zmanovsky

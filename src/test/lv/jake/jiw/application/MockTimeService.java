@@ -1,4 +1,4 @@
-package lv.jake.jiw;
+package lv.jake.jiw.application;
 
 import lv.jake.jiw.application.TimeService;
 

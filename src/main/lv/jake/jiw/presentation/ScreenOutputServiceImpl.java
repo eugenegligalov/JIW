@@ -1,15 +1,11 @@
 package lv.jake.jiw.presentation;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.DueDateChecker;
+import lv.jake.jiw.application.DueDateChecker;
 import lv.jake.jiw.application.Configuration;
-import lv.jake.jiw.domain.IssueStatus;
-import lv.jake.jiw.domain.JiraFilter;
-import lv.jake.jiw.domain.JiraIssue;
 import org.apache.log4j.Logger;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * User: Jaker

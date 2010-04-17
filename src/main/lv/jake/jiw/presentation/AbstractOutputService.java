@@ -1,8 +1,8 @@
 package lv.jake.jiw.presentation;
 
-import lv.jake.jiw.DueDateChecker;
+import lv.jake.jiw.application.DueDateChecker;
 import lv.jake.jiw.application.Configuration;
-import lv.jake.jiw.domain.IssueStatus;
+import lv.jake.jiw.application.IssueStatus;
 import lv.jake.jiw.domain.JiraFilter;
 import lv.jake.jiw.domain.JiraIssue;
 
