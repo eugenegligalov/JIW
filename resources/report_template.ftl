@@ -16,7 +16,7 @@
   <TH>Summary</TH>
  </TR>
 <#list sections as section>
-  <TR><TD><B>${section.getFilter().getName()}</B></TD></TR>
+  <TR ALIGN="CENTER" BGCOLOR="LIGHTGREEN"><TD COLSPAN="7"><B>${section.getFilter().getName()}</B></TD></TR>
   <#list section.getRows() as row>
   <TR>
     <TD><A HREF="${row.getJiraIssueUrl()}">${row.getKey()}</A></TD>
