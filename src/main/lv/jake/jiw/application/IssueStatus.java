@@ -18,7 +18,6 @@ public class IssueStatus {
 
     public static final IssueStatus STATUS_NOT_VALID = new NotValidIssueStatus(); 
 
-    protected boolean ok = false;
     protected boolean slaSoon = false;
     protected boolean slaOverdue = false;
     protected boolean notCommented = false;
