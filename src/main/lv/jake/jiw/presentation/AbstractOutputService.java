@@ -1,6 +1,6 @@
 package lv.jake.jiw.presentation;
 
-import lv.jake.jiw.application.DueDateChecker;
+import lv.jake.jiw.application.IssueValidationService;
 import lv.jake.jiw.application.Configuration;
 import lv.jake.jiw.application.IssueStatus;
 import lv.jake.jiw.domain.JiraFilter;
@@ -21,12 +21,12 @@ public abstract class AbstractOutputService implements OutputService {
     private static final SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:ss");
     protected List<JiraFilter> filters = null;
     protected Map<String, List<JiraIssue>> issues = null;
-    protected DueDateChecker dueDateChecker = null;
+    protected IssueValidationService issueValidationService = null;
     protected Configuration configuration = null;
 
-    public AbstractOutputService(Configuration configuration, DueDateChecker dueDateChecker) {
+    public AbstractOutputService(Configuration configuration, IssueValidationService issueValidationService) {
         this.configuration = configuration;
-        this.dueDateChecker = dueDateChecker;
+        this.issueValidationService = issueValidationService;
     }
 
     public void setData(List<JiraFilter> filters, Map<String, List<JiraIssue>> issues) {
@@ -61,9 +61,7 @@ public abstract class AbstractOutputService implements OutputService {
     }
 
     private IssueStatus getIssueStatus(JiraIssue issue) {
-        return dueDateChecker.getDueDateStatus(issue.getCreatedDate(),
-                issue.getDueDate(), issue.getPriority(),
-                issue.getLastUpdateDate());
+        return issueValidationService.validateIssue(issue);
     }
 
     private String formatNullableDate(final Date date) {
