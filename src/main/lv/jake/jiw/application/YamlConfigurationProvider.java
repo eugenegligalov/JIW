@@ -32,7 +32,7 @@ public class YamlConfigurationProvider implements Provider<Configuration> {
         try {
             return load(configurationFileName);
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Configuration file " + configurationFileName + " is not found.", e);
+            throw new JiwRuntimeException("Configuration file " + configurationFileName + " is not found.", e);
         }
     }
 }
