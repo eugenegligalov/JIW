@@ -3,7 +3,7 @@ package lv.jake.jiw.presentation;
 import com.google.inject.Inject;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import lv.jake.jiw.application.DueDateChecker;
+import lv.jake.jiw.application.IssueValidationService;
 import lv.jake.jiw.presentation.ReportSection;
 import lv.jake.jiw.application.Configuration;
 import org.apache.log4j.Logger;
@@ -24,8 +24,8 @@ public class HtmlOutputServiceImpl extends AbstractOutputService {
     protected Template template = null;
 
     @Inject
-    public HtmlOutputServiceImpl(Configuration configuration, DueDateChecker dueDateChecker) {
-        super(configuration, dueDateChecker);
+    public HtmlOutputServiceImpl(Configuration configuration, IssueValidationService issueValidationService) {
+        super(configuration, issueValidationService);
         this.template = loadFreeMarkerTemplate(
                 configuration.getHtmlReportTemplatePath(), configuration.getHtmlReportTemplateFileName()
         );

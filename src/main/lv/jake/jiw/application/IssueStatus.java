@@ -1,5 +1,7 @@
 package lv.jake.jiw.application;
 
+import lv.jake.jiw.domain.JiraIssue;
+
 /**
  * User: Eugene Gligalov
  * Date: 2010.17.4
@@ -14,6 +16,8 @@ public class IssueStatus {
     public static final String DUE_DATE_SOON = "due date soon";
     public static final String SLA_SOON = "sla soon";
     public static final String DUE_DATE_NOT_SET = "due date is not set";
+
+    public static final IssueStatus STATUS_NOT_VALID = new NotValidIssueStatus(); 
 
     protected boolean ok = false;
     protected boolean slaSoon = false;
@@ -96,5 +100,11 @@ public class IssueStatus {
         if (dueDateSoon) stringStatus = stringStatus.concat(DUE_DATE_SOON + "\n");
         if (notValid) stringStatus = stringStatus.concat(NOT_VALID + "\n");
         return stringStatus;
+    }
+
+    public static class NotValidIssueStatus extends IssueStatus {
+        private NotValidIssueStatus() {
+            setNotValid(true);
+        }
     }
 }

@@ -1,7 +1,7 @@
 package lv.jake.jiw.presentation;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.application.DueDateChecker;
+import lv.jake.jiw.application.IssueValidationService;
 import lv.jake.jiw.application.Configuration;
 import org.apache.log4j.Logger;
 
@@ -16,8 +16,8 @@ public class ScreenOutputServiceImpl extends AbstractOutputService {
     private static org.apache.log4j.Logger log = Logger.getLogger(ScreenOutputServiceImpl.class);
 
     @Inject
-    public ScreenOutputServiceImpl(Configuration configuration, DueDateChecker dueDateChecker) {
-        super(configuration, dueDateChecker);
+    public ScreenOutputServiceImpl(Configuration configuration, IssueValidationService issueValidationService) {
+        super(configuration, issueValidationService);
     }
 
     public void generateReport() {
