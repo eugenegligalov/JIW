@@ -25,32 +25,6 @@ public abstract class AbstractIssueValidator implements IssueValidator  {
         return instance;
     }
 
-    public IssueStatus getStatusForBlocker(Calendar duedate, Calendar updated, Calendar created) {
-        IssueStatus status = new IssueStatus();
-        Calendar currentDate = timeService.getCalendar();
-
-        if (duedate == null && getTimeDifferenceInMinutes(created, currentDate) > 10) {
-            status.setDueDateNotSet(true);
-        }
-
-        if (getTimeDifferenceInMinutes(updated, currentDate) > 58) {
-            status.setNotCommented(true);
-        }
-
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
-            status.setDueDateSoon(true);
-        }
-
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
-            status.setOverdue(true);
-        }
-
-        if (getTimeDifferenceInHours(created, currentDate) > 4) {
-            status.setSlaOverdue(true);
-        }
-        return status;
-    }
-
     public static long getTimeDifferenceInMinutes(Calendar startDate, Calendar endDate) {
         long milliseconds1 = startDate.getTimeInMillis();
         long milliseconds2 = endDate.getTimeInMillis();

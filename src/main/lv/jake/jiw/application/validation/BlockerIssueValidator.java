@@ -32,7 +32,32 @@ public class BlockerIssueValidator extends AbstractIssueValidator {
             dueDateCalendar.set(Calendar.HOUR, 18);
             dueDateCalendar.set(Calendar.MINUTE, 0);
         }
-        return getStatusForBlocker(dueDateCalendar, updatedDateCalendar, createdDateCalendar);
+        return getStatusForBlocker(timeService, dueDateCalendar, updatedDateCalendar, createdDateCalendar);
     }
 
+    public IssueStatus getStatusForBlocker(TimeService timeService, Calendar duedate, Calendar updated, Calendar created) {
+        IssueStatus status = new IssueStatus();
+        Calendar currentDate = timeService.getCalendar();
+
+        if (duedate == null && getTimeDifferenceInMinutes(created, currentDate) > 10) {
+            status.setDueDateNotSet(true);
+        }
+
+        if (getTimeDifferenceInMinutes(updated, currentDate) > 58) {
+            status.setNotCommented(true);
+        }
+
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
+            status.setDueDateSoon(true);
+        }
+
+        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
+            status.setOverdue(true);
+        }
+
+        if (getTimeDifferenceInHours(created, currentDate) > 4) {
+            status.setSlaOverdue(true);
+        }
+        return status;
+    }
 }
