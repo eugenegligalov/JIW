@@ -9,12 +9,15 @@ import java.net.URL;
  * Time: 8:27:15 PM
  */
 public class Configuration {
+    public static final int DEFAULT_REPORT_GENERATION_DELAY = 60 * 1000; // 1 minute
+
     private String url;
     private String username;
     private String password;
     private String xmlRpcPath = "/rpc/xmlrpc";
     private String htmlReportTemplatePath = ".";
     private String htmlReportTemplateFileName = "report_template.ftl";
+    private long reportGenerationPeriod = DEFAULT_REPORT_GENERATION_DELAY;
 
     public Configuration() {
     }
@@ -75,5 +78,14 @@ public class Configuration {
     @SuppressWarnings({"UnusedDeclaration"})
     public void setHtmlReportTemplateFileName(String htmlReportTemplateFileName) {
         this.htmlReportTemplateFileName = htmlReportTemplateFileName;
+    }
+
+    public long getReportGenerationPeriod() {
+        return reportGenerationPeriod;
+    }
+
+    @SuppressWarnings({"UnusedDeclaration"})
+    public void setReportGenerationPeriod(long reportGenerationPeriod) {
+        this.reportGenerationPeriod = reportGenerationPeriod;
     }
 }
