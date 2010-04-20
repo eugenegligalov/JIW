@@ -5,6 +5,13 @@
  <TITLE>JIW Report</TITLE>
 </HEAD>
 <BODY>
+
+<style type="text/css">
+tr:nth-child(2n+1) {
+  background-color: lightgray;
+}
+</style>
+
 <TABLE>
  <TR>
   <TH>ID</TD>
