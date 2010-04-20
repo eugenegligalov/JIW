@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 * Date: Apr 12, 2010
 * Time: 8:27:10 PM
 */
-class MockTimeService implements TimeService {
+class MockTimeService extends TimeServiceImpl {
     protected GregorianCalendar calendar;
 
     public MockTimeService() {

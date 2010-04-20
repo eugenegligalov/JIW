@@ -1,7 +1,6 @@
 package lv.jake.jiw.application;
 
 import junit.framework.TestCase;
-import lv.jake.jiw.application.validation.AbstractIssueValidator;
 import lv.jake.jiw.application.validation.IssueValidatorRepositoryImpl;
 import lv.jake.jiw.domain.JiraIssue;
 
@@ -43,9 +42,9 @@ public class IssueValidationServiceTest extends TestCase {
 
         assertEquals(true, issueValidationService.validateIssue(issue).isOverdue());
 
-        assertEquals(AbstractIssueValidator.getTimeDifferenceInDays(timeService.getCalendar(), timeService.getCalendar()), 0);
-        assertEquals(AbstractIssueValidator.getTimeDifferenceInHours(timeService.getCalendar(), timeService.getCalendar()), 0);
-        assertEquals(AbstractIssueValidator.getTimeDifferenceInMinutes(timeService.getCalendar(), timeService.getCalendar()), 0);
+        assertEquals(timeService.getTimeDifferenceInDays(timeService.getCalendar(), timeService.getCalendar()), 0);
+        assertEquals(timeService.getTimeDifferenceInHours(timeService.getCalendar(), timeService.getCalendar()), 0);
+        assertEquals(timeService.getTimeDifferenceInMinutes(timeService.getCalendar(), timeService.getCalendar()), 0);
     }
 
     protected void setUp() throws Exception {

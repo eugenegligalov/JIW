@@ -19,27 +19,4 @@ public abstract class AbstractIssueValidator implements IssueValidator  {
         this.timeService = timeService;
     }
 
-    public static Calendar createCalendarFromDate(Date date) {
-        final Calendar instance = GregorianCalendar.getInstance();
-        instance.setTime(date);
-        return instance;
-    }
-
-    public static long getTimeDifferenceInMinutes(Calendar startDate, Calendar endDate) {
-        return getTimeDifference(startDate, endDate) / (60 * 1000);
-    }
-
-    public static long getTimeDifferenceInHours(Calendar startDate, Calendar endDate) {
-        return getTimeDifference(startDate, endDate) / (60 * 60 * 1000);
-    }
-
-    public static long getTimeDifferenceInDays(Calendar startDate, Calendar endDate) {
-        return getTimeDifference(startDate, endDate) / (24 * 60 * 60 * 1000);
-    }
-
-    private static long getTimeDifference(Calendar startDate, Calendar endDate) {
-        long milliseconds1 = startDate.getTimeInMillis();
-        long milliseconds2 = endDate.getTimeInMillis();
-        return milliseconds2 - milliseconds1;
-    }
 }

@@ -27,12 +27,12 @@ public class MinorIssueValidator extends AbstractIssueValidator {
     }
 
     public IssueStatus validateMinor(JiraIssue issue) {
-        Calendar createdDateCalendar = createCalendarFromDate(issue.getCreatedDate());
-        Calendar updatedDateCalendar = createCalendarFromDate(issue.getLastUpdateDate());
+        Calendar createdDateCalendar = timeService.createCalendarFromDate(issue.getCreatedDate());
+        Calendar updatedDateCalendar = timeService.createCalendarFromDate(issue.getLastUpdateDate());
         Calendar dueDateCalendar = null;
         Date duedate = issue.getDueDate();
         if (duedate != null) {
-            dueDateCalendar = createCalendarFromDate(duedate);
+            dueDateCalendar = timeService.createCalendarFromDate(duedate);
             dueDateCalendar.set(Calendar.HOUR, 18);
             dueDateCalendar.set(Calendar.MINUTE, 0);
         }
@@ -42,10 +42,10 @@ public class MinorIssueValidator extends AbstractIssueValidator {
     public IssueStatus getStatusForMinor(Calendar duedate, Calendar updated, Calendar created) {
         IssueStatus status = new IssueStatus();
         Calendar currentDate = timeService.getCalendar();
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) < 24 && getTimeDifferenceInHours(currentDate, duedate) > 0) {
+        if (duedate != null && timeService.getTimeDifferenceInHours(currentDate, duedate) < 24 && timeService.getTimeDifferenceInHours(currentDate, duedate) > 0) {
             status.setDueDateSoon(true);
         }
-        if (duedate != null && getTimeDifferenceInHours(currentDate, duedate) <= 0) {
+        if (duedate != null && timeService.getTimeDifferenceInHours(currentDate, duedate) <= 0) {
             status.setOverdue(true);
         }
         return status;
