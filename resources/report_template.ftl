@@ -10,6 +10,9 @@
 tr:nth-child(2n+1) {
   background-color: lightgray;
 }
+tr.green{
+ background-color: LIGHTGREEN; 
+}
 </style>
 
 <TABLE>
@@ -23,7 +26,7 @@ tr:nth-child(2n+1) {
   <TH>Summary</TH>
  </TR>
 <#list sections as section>
-  <TR ALIGN="CENTER" BGCOLOR="LIGHTGREEN"><TD COLSPAN="7"><B>${section.getFilter().getName()}</B></TD></TR>
+  <TR class="green" ALIGN="CENTER"><TD COLSPAN="7"><B>${section.getFilter().getName()}</B></TD></TR>
   <#list section.getRows() as row>
   <TR>
     <TD><A HREF="${row.getJiraIssueUrl()}">${row.getKey()}</A></TD>
