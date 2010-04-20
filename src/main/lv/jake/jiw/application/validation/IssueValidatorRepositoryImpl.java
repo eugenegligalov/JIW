@@ -3,7 +3,10 @@ package lv.jake.jiw.application.validation;
 import com.google.inject.Inject;
 import lv.jake.jiw.application.TimeService;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Author: Konstantin Zmanovsky

@@ -85,7 +85,7 @@ public class Console {
         } else if (CMD_SCHEDULE.equalsIgnoreCase(input)) {
             scheduleRecurringReportGeneration();
             System.out.println("Recurring report generation has been scheduled, once in " +
-                    Configuration.DEFAULT_REPORT_GENERATION_DELAY / ( 60 * 1000 ) + " minutes");
+                    Configuration.DEFAULT_REPORT_GENERATION_DELAY / (60 * 1000) + " minutes");
         } else if (input.trim().length() > 0) {
             System.out.println("Unrecognized command");
         }

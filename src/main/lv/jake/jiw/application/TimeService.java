@@ -21,5 +21,5 @@ public interface TimeService {
     long getTimeDifferenceInHours(Calendar startDate, Calendar endDate);
 
     long getTimeDifferenceInMinutes(Calendar startDate, Calendar endDate);
-    
+
 }

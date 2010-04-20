@@ -1,8 +1,8 @@
 package lv.jake.jiw.presentation;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.application.IssueValidationService;
 import lv.jake.jiw.application.Configuration;
+import lv.jake.jiw.application.IssueValidationService;
 import org.apache.log4j.Logger;
 
 import java.util.List;

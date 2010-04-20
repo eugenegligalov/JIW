@@ -1,7 +1,5 @@
 package lv.jake.jiw.application;
 
-import lv.jake.jiw.domain.JiraIssue;
-
 /**
  * User: Eugene Gligalov
  * Date: 2010.17.4
@@ -17,7 +15,7 @@ public class IssueStatus {
     public static final String SLA_SOON = "sla soon";
     public static final String DUE_DATE_NOT_SET = "due date is not set";
 
-    public static final IssueStatus STATUS_NOT_VALID = new NotValidIssueStatus(); 
+    public static final IssueStatus STATUS_NOT_VALID = new NotValidIssueStatus();
 
     protected boolean ok = false;
     protected boolean slaSoon = false;
@@ -29,7 +27,7 @@ public class IssueStatus {
     protected boolean notValid = false;
 
     public boolean isOk() {
-        return !( slaSoon || slaOverdue || notCommented || dueDateNotSet || dueDateSoon || overdue || notValid );
+        return !(slaSoon || slaOverdue || notCommented || dueDateNotSet || dueDateSoon || overdue || notValid);
     }
 
     public boolean isSlaSoon() {

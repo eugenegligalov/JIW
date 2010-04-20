@@ -1,8 +1,8 @@
 package lv.jake.jiw.presentation;
 
-import lv.jake.jiw.application.IssueValidationService;
 import lv.jake.jiw.application.Configuration;
 import lv.jake.jiw.application.IssueStatus;
+import lv.jake.jiw.application.IssueValidationService;
 import lv.jake.jiw.domain.JiraFilter;
 import lv.jake.jiw.domain.JiraIssue;
 

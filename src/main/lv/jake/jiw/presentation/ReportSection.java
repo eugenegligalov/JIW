@@ -1,7 +1,6 @@
 package lv.jake.jiw.presentation;
 
 import lv.jake.jiw.domain.JiraFilter;
-import lv.jake.jiw.domain.JiraIssue;
 
 import java.util.Collections;
 import java.util.LinkedList;
