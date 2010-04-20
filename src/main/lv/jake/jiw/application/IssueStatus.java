@@ -89,13 +89,13 @@ public class IssueStatus {
 
     public String toString() {
         String stringStatus = "";
-        if (slaSoon) stringStatus = stringStatus.concat(SLA_SOON + "\n");
-        if (slaOverdue) stringStatus = stringStatus.concat(SLA_OVERDUE + "\n");
-        if (notCommented) stringStatus = stringStatus.concat(NOT_COMMENTED + "\n");
-        if (overdue) stringStatus = stringStatus.concat(OVERDUE + "\n");
-        if (dueDateNotSet) stringStatus = stringStatus.concat(DUE_DATE_NOT_SET + "\n");
-        if (dueDateSoon) stringStatus = stringStatus.concat(DUE_DATE_SOON + "\n");
-        if (notValid) stringStatus = stringStatus.concat(NOT_VALID + "\n");
+        if (slaSoon) stringStatus = stringStatus.concat("(" + SLA_SOON + ")");
+        if (slaOverdue) stringStatus = stringStatus.concat("(" + SLA_OVERDUE + ")");
+        if (notCommented) stringStatus = stringStatus.concat("(" + NOT_COMMENTED + ")");
+        if (overdue) stringStatus = stringStatus.concat("(" + OVERDUE + ")");
+        if (dueDateNotSet) stringStatus = stringStatus.concat("(" + DUE_DATE_NOT_SET + ")");
+        if (dueDateSoon) stringStatus = stringStatus.concat("(" + DUE_DATE_SOON + ")");
+        if (notValid) stringStatus = stringStatus.concat("(" + NOT_VALID + ")");
         return stringStatus;
     }
 
