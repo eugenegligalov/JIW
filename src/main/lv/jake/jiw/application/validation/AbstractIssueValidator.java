@@ -26,23 +26,20 @@ public abstract class AbstractIssueValidator implements IssueValidator  {
     }
 
     public static long getTimeDifferenceInMinutes(Calendar startDate, Calendar endDate) {
-        long milliseconds1 = startDate.getTimeInMillis();
-        long milliseconds2 = endDate.getTimeInMillis();
-        long diff = milliseconds2 - milliseconds1;
-        return diff / (60 * 1000);
+        return getTimeDifference(startDate, endDate) / (60 * 1000);
     }
 
     public static long getTimeDifferenceInHours(Calendar startDate, Calendar endDate) {
-        long milliseconds1 = startDate.getTimeInMillis();
-        long milliseconds2 = endDate.getTimeInMillis();
-        long diff = milliseconds2 - milliseconds1;
-        return diff / (60 * 60 * 1000);
+        return getTimeDifference(startDate, endDate) / (60 * 60 * 1000);
     }
 
     public static long getTimeDifferenceInDays(Calendar startDate, Calendar endDate) {
+        return getTimeDifference(startDate, endDate) / (24 * 60 * 60 * 1000);
+    }
+
+    private static long getTimeDifference(Calendar startDate, Calendar endDate) {
         long milliseconds1 = startDate.getTimeInMillis();
         long milliseconds2 = endDate.getTimeInMillis();
-        long diff = milliseconds2 - milliseconds1;
-        return diff / (24 * 60 * 60 * 1000);
+        return milliseconds2 - milliseconds1;
     }
 }
