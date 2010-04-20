@@ -3,13 +3,14 @@ package lv.jake.jiw.presentation;
 import com.google.inject.Inject;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import lv.jake.jiw.application.IssueValidationService;
-import lv.jake.jiw.presentation.ReportSection;
 import lv.jake.jiw.application.Configuration;
+import lv.jake.jiw.application.IssueValidationService;
 import org.apache.log4j.Logger;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static lv.jake.jiw.Utils.loadFreeMarkerTemplate;
 

@@ -1,12 +1,12 @@
 package lv.jake.jiw.application;
 
 import com.google.inject.Inject;
-import lv.jake.jiw.application.validation.*;
+import lv.jake.jiw.application.validation.IssueValidator;
+import lv.jake.jiw.application.validation.IssueValidatorRepository;
 import lv.jake.jiw.domain.JiraIssue;
 import org.apache.log4j.Logger;
 
 import java.util.Collection;
-import java.util.List;
 
 public class IssueValidationService {
     private static org.apache.log4j.Logger log = Logger.getLogger(IssueValidationService.class);

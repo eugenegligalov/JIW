@@ -64,14 +64,13 @@ public class JiraXmlRpcApi implements JiraService {
 
         List<JiraFilter> filters = new LinkedList<JiraFilter>();
         for (Object o : filterObjects) {
-            filters.add(convertMapToJiraFilter((Map<String, String>)o));
+            filters.add(convertMapToJiraFilter((Map<String, String>) o));
         }
         return filters;
     }
 
     public Map<String, List<JiraIssue>> getIssueMapFromFilters(final List<JiraFilter> filters)
-            throws JiwServiceException
-    {
+            throws JiwServiceException {
         final Map<String, List<JiraIssue>> filterIssueMap = new HashMap<String, List<JiraIssue>>();
         for (JiraFilter filter : filters) {
             final String filterId = filter.getId();

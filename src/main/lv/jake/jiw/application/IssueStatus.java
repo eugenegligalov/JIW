@@ -12,12 +12,14 @@ public class IssueStatus {
     public static final String OVERDUE = "overdue";
     public static final String SLA_OVERDUE = "sla overdue";
     public static final String NOT_COMMENTED = "not commented";
+    public static final String OK = "ok";
     public static final String DUE_DATE_SOON = "due date soon";
     public static final String SLA_SOON = "sla soon";
     public static final String DUE_DATE_NOT_SET = "due date is not set";
 
     public static final IssueStatus STATUS_NOT_VALID = new NotValidIssueStatus(); 
 
+    protected boolean ok = false;
     protected boolean slaSoon = false;
     protected boolean slaOverdue = false;
     protected boolean notCommented = false;
@@ -89,6 +91,7 @@ public class IssueStatus {
 
     public String toString() {
         String stringStatus = "";
+        if (ok) stringStatus = stringStatus.concat(OK + "\n");
         if (slaSoon) stringStatus = stringStatus.concat(SLA_SOON + "\n");
         if (slaOverdue) stringStatus = stringStatus.concat(SLA_OVERDUE + "\n");
         if (notCommented) stringStatus = stringStatus.concat(NOT_COMMENTED + "\n");

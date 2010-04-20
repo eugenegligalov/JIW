@@ -3,15 +3,11 @@ package lv.jake.jiw;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import lv.jake.jiw.application.validation.IssueValidator;
+import lv.jake.jiw.application.*;
 import lv.jake.jiw.application.validation.IssueValidatorRepository;
 import lv.jake.jiw.application.validation.IssueValidatorRepositoryImpl;
 import lv.jake.jiw.presentation.HtmlOutputServiceImpl;
 import lv.jake.jiw.presentation.OutputService;
-import lv.jake.jiw.application.*;
-import lv.jake.jiw.presentation.ScreenOutputServiceImpl;
-
-import java.util.List;
 
 /**
  * Author: Konstantin Zmanovsky
