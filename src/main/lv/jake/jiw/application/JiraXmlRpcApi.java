@@ -120,7 +120,7 @@ public class JiraXmlRpcApi implements JiraService {
         } catch (XmlRpcException e) {
             log.error(e);
         }
-        log.info("Logout successful: " + bool);
+        log.debug("Logout successful: " + bool);
     }
 
 
