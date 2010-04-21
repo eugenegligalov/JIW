@@ -2,5 +2,11 @@ url                         :
 path                        : /rpc/xmlrpc
 username                    :
 password                    :
+#using for html reports
 htmlReportTemplatePath      : resources
 htmlReportTemplateFileName	: report_template.ftl
+outputHtmlReportTemplatePath: .
+outputHtmlReportFileName    : report.htm
+#if port is set then server will be started
+localServerPort             : 80
+useHttpServer               : yes

@@ -17,9 +17,46 @@ public class Configuration {
     private String xmlRpcPath = "/rpc/xmlrpc";
     private String htmlReportTemplatePath = ".";
     private String htmlReportTemplateFileName = "report_template.ftl";
+    private String outputHtmlReportTemplatePath = ".";
+    private String outputHtmlReportFileName = "report.htm";
+    private String useHttpServer = "no";
+
+    private int localServerPort = 80;
     private long reportGenerationPeriod = DEFAULT_REPORT_GENERATION_DELAY;
 
     public Configuration() {
+    }
+
+    public String getUseHttpServer() {
+        return useHttpServer;
+    }
+
+    public void setUseHttpServer(String useHttpServer) {
+        this.useHttpServer = useHttpServer;
+    }
+
+    public String getOutputHtmlReportTemplatePath() {
+        return outputHtmlReportTemplatePath;
+    }
+
+    public void setOutputHtmlReportTemplatePath(String outputHtmlReportTemplatePath) {
+        this.outputHtmlReportTemplatePath = outputHtmlReportTemplatePath;
+    }
+
+    public String getOutputHtmlReportFileName() {
+        return outputHtmlReportFileName;
+    }
+
+    public void setOutputHtmlReportFileName(String outputHtmlReportFileName) {
+        this.outputHtmlReportFileName = outputHtmlReportFileName;
+    }
+
+    public int getLocalServerPort() {
+        return localServerPort;
+    }
+
+    public void setLocalServerPort(int localServerPort) {
+        this.localServerPort = localServerPort;
     }
 
     public String getUrl() {
