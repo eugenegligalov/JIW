@@ -3,6 +3,7 @@
 <HTML>
 <HEAD>
  <TITLE>JIW Report</TITLE>
+ <meta http-equiv="refresh" content="30" >
 </HEAD>
 <BODY>
 
