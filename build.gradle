@@ -1,5 +1,5 @@
-usePlugin 'project-reports'
-usePlugin 'java'
+apply plugin: 'project-reports'
+apply plugin: 'java'
 
 archivesBaseName = 'jiw'
 version = '0.1.x'
@@ -11,9 +11,9 @@ repositories {
 dependencies {
   compile group: 'log4j', name: 'log4j', version: '1.2.15', {
     // Excluding depedencies brought by log4j 1.2.15, but not needed and not available in the public repository
-    exclude organization: "javax.jms", module: "jms"
-    exclude organization: "com.sun.jdmk", module: "jmxtools"
-    exclude organization: "com.sun.jmx", module: "jmxri"
+    exclude group: 'javax.jms', module: 'jms'
+    exclude group: 'com.sun.jdmk', module: 'jmxtools'
+    exclude group: 'com.sun.jmx', module: 'jmxri'
   }
   compile group: 'org.apache.ws.commons.util', name: 'ws-commons-util', version: '1.0.2'
   compile group: 'org.apache.xmlrpc', name: 'xmlrpc-client', version: '3.1.3'
@@ -42,8 +42,8 @@ sourceSets {
 }
 
 task releaseZip(type: Zip, dependsOn: [jar]) {
-  fileSet(dir: 'resources')
-  fileSet(dir: '.') {
+  from(dir: 'resources')
+  from(dir: '.') {
     include('lib/*')
   }
   configurations.'archives'.artifacts.each {
